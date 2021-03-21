@@ -6,6 +6,9 @@ const Header = () => {
     <header>
       <h1>Accrue Annuity</h1>
       <div className="links">
+        <Link to="/account" className="link">
+          Account
+        </Link>
         <Link to="/profile" className="link">
           Profile
         </Link>
