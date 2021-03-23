@@ -1,9 +1,9 @@
-const express = require('express');
-const authMiddleware = require('../middleware/auth');
+const express = require('express'); //express server
+const authMiddleware = require('../middleware/auth'); //auth api
 const { pool } = require('../db/connect');
 const Router = express.Router();
 
-const getAccountByAccountId = async function (account_id) {
+const getAccountByAccountId = async function (account_id) { //fetch acct id
   try {
     const result = await pool.query(
       'select * from account a inner join accrue_user b on a.userid = b.userid where a.account_id=$1',
@@ -15,7 +15,7 @@ const getAccountByAccountId = async function (account_id) {
   }
 };
 
-async function getAccountByEmail(email) {
+async function getAccountByEmail(email) { //fetch acct email
   try {
     const result = await pool.query(
       'select * from account a inner join accrue_user b on a.userid = b.userid where b.email=$1',
@@ -28,7 +28,7 @@ async function getAccountByEmail(email) {
   }
 }
 
-// get account details by email
+// fetch email, throws error if no acct email
 Router.get('/account', authMiddleware, async (req, res) => {
   try {
     const result = await getAccountByEmail(req.user.email);
@@ -45,13 +45,13 @@ Router.get('/account', authMiddleware, async (req, res) => {
     });
   }
 });
-
+//
 Router.post('/account', authMiddleware, async (req, res) => {
-  const { account_no, contract_name, ifsc } = req.body;
+  const { payout_freq, contract_name, payout_amt } = req.body;
   try {
     await pool.query(
-      'insert into account(account_no,contract_name,ifsc,userid) values($1,$2,$3,$4)',
-      [account_no, contract_name, ifsc, req.user.userid]
+      'insert into account(payout_freq,contract_name,payout_amt,userid) values($1,$2,$3,$4)',
+      [payout_freq, contract_name, payout_amt, req.user.userid]
     );
     res.status(201).send();
   } catch (error) {
@@ -62,11 +62,11 @@ Router.post('/account', authMiddleware, async (req, res) => {
 });
 
 Router.patch('/account', authMiddleware, async (req, res) => {
-  const { ifsc } = req.body;
+  const { payout_amt } = req.body;
   try {
     const result = await pool.query(
-      'update account set ifsc=$1 where userid=$2 returning *',
-      [ifsc, req.user.userid]
+      'update account set payout_amt=$1 where userid=$2 returning *',
+      [payout_amt, req.user.userid]
     );
     res.send({ account: result.rows[0] });
   } catch (error) {

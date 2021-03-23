@@ -1,19 +1,21 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { connect } from 'react-redux';
-import { Form, Button } from 'react-bootstrap';
+import { connect } from 'react-redux'; //connects react component to redux state
+import { Form, Button } from 'react-bootstrap'; //import form and button
 import { initiateLogin } from '../actions/auth';
 import { resetErrors } from '../actions/errors';
-import { validateFields } from '../utils/common';
-import { Link } from 'react-router-dom';
+import { validateFields } from '../utils/common'; //makes sure form fields across entire app are not empty
+import { Link } from 'react-router-dom'; //accessible nav throughout app
+//import logo from '../public/logo.png';
+//<img src={logo} className="app-logo" alt="logo" />
 
-const Login = (props) => {
+const Login = (props) => { //initialize login state empty
   const [state, setState] = useState({
     email: '',
     password: ''
   });
   const [errorMsg, setErrorMsg] = useState('');
 
-  const processOnMount = useCallback(() => {
+  const processOnMount = useCallback(() => { //when page loads, make sure errors are cleared
     setErrorMsg(props.errors);
     return () => props.dispatch(resetErrors());
   }, [props]);
@@ -22,21 +24,22 @@ const Login = (props) => {
     processOnMount();
   }, [processOnMount]);
 
-  const handleLogin = (event) => {
+  const handleLogin = (event) => { //login using email, password
     event.preventDefault();
     const { email, password } = state;
     const fieldsToValidate = [{ email }, { password }];
 
-    const allFieldsEntered = validateFields(fieldsToValidate);
+    const allFieldsEntered = validateFields(fieldsToValidate); //all fields have values @ login
     if (!allFieldsEntered) {
       setErrorMsg({
         signin_error: 'Please enter all the fields.'
       });
+      //login fails and displays error
     } else {
       setErrorMsg({
         signin_error: ''
       });
-      // login successful
+      // login is successful
       props.dispatch(initiateLogin(email, password));
     }
   };
@@ -45,14 +48,16 @@ const Login = (props) => {
     const { name, value } = event.target;
 
     setState({
-      ...state,
+      ...state, //email, pass defined
       [name]: value
     });
   };
 
   return (
     <div className="login-page">
-      <h1>Accrue Annuity</h1>
+      <div>
+        <img id="logo-main" src={process.env.PUBLIC_URL + '/logo.png'} alt=""/> 
+      </div>
       <div className="login-form">
         <Form onSubmit={handleLogin}>
           {errorMsg && errorMsg.signin_error && (
@@ -94,4 +99,5 @@ const mapStateToProps = (state) => ({
   errors: state.errors
 });
 
+//export default connect()(Login);
 export default connect(mapStateToProps)(Login);

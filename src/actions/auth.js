@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'axios'; //use to send get request
 import { SIGN_IN, SIGN_OUT, BASE_API_URL } from '../utils/constants';
 import { initiateGetProfile } from './profile';
 import { resetAccount } from './account';
@@ -25,7 +25,7 @@ export const initiateLogin = (email, password) => {
       history.push('/profile');
     } catch (error) {
       console.log('error', error);
-      error.response && dispatch(getErrors(error.response.data));
+      error.response && dispatch(getErrors(error.response.data)); //displays errors if any
     }
   };
 };
@@ -37,7 +37,7 @@ export const registerNewUser = (data) => {
       return { success: true };
     } catch (error) {
       console.log('error', error);
-      error.response && dispatch(getErrors(error.response.data));
+      error.response && dispatch(getErrors(error.response.data)); //displays errors if any
       return { success: false };
     }
   };
@@ -55,7 +55,7 @@ export const initiateLogout = () => {
       dispatch(resetAccount()); //tells redux to clear the information stored
       return dispatch(signOut());
     } catch (error) {
-      error.response && dispatch(getErrors(error.response.data));
+      error.response && dispatch(getErrors(error.response.data)); //displays errors if any
     }
   };
 };

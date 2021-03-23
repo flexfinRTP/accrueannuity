@@ -1,5 +1,5 @@
 import { useEffect, useCallback, useRef } from 'react';
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'; //connects react component to redux state
 import { initiateLogout } from '../actions/auth';
 
 const Logout = (props) => {

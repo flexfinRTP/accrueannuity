@@ -1,8 +1,11 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'; //connects react component to redux state
 import _ from 'lodash';
 import { createBrowserHistory } from 'history';
 import { Route, Switch, Router } from 'react-router-dom';
+//Route renders UI component when path matches the URL
+//Switch stops render at matching route, display only one route used
+//BrowserRouter keeps UI sync with URL by using HTML5 history(pushState, replaceState)
 import Login from '../components/Login';
 import Register from '../components/Register';
 import Profile from '../components/Profile';

@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom';
 const Header = () => {
   return (
     <header>
-      <h1>Accrue Annuity</h1>
+      <div>
+        <img src={process.env.PUBLIC_URL + '/logo.png'} alt=""/> 
+      </div>
       <div className="links">
         <Link to="/account" className="link">
           Account

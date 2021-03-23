@@ -1,6 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Button } from 'react-bootstrap';
+import { connect } from 'react-redux'; //connects react component to redux state
+import { Button } from 'react-bootstrap'; //import button
 import AccountForm from './AccountForm';
 import Summary from './Summary';
 
@@ -21,27 +21,24 @@ class Account extends React.Component {
         <div className="account">
           <Button
             variant="primary"
-            className={`${
-              selectedType === 'withdraw' ? 'active account-btn' : 'account-btn'
-            }`}
+            className={`${selectedType === 'withdraw' ? 'active account-btn' : 'account-btn'
+              }`}
             onClick={() => this.setSelectedType('withdraw')}
           >
             Withdraw
           </Button>
           <Button
             variant="secondary"
-            className={`${
-              selectedType === 'deposit' ? 'active account-btn' : 'account-btn'
-            }`}
+            className={`${selectedType === 'deposit' ? 'active account-btn' : 'account-btn'
+              }`}
             onClick={() => this.setSelectedType('deposit')}
           >
             Deposit
           </Button>
           <Button
             variant="info"
-            className={`${
-              selectedType === 'summary' ? 'active account-btn' : 'account-btn'
-            }`}
+            className={`${selectedType === 'summary' ? 'active account-btn' : 'account-btn'
+              }`}
             onClick={() => this.setSelectedType('summary')}
           >
             Summary

@@ -25,7 +25,7 @@ export const initiateDepositAmount = (account_id, amount) => {
       );
       dispatch(updateAccountBalance(amount, 'deposit'));
     } catch (error) {
-      error.response && dispatch(getErrors(error.response.data));
+      error.response && dispatch(getErrors(error.response.data)); //displays errors if any
     }
   };
 };
@@ -46,7 +46,7 @@ export const initiateWithdrawAmount = (account_id, amount) => {
       );
       dispatch(updateAccountBalance(amount, 'withdraw'));
     } catch (error) {
-      error.response && dispatch(getErrors(error.response.data));
+      error.response && dispatch(getErrors(error.response.data)); //displays errors if any
     }
   };
 };

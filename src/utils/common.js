@@ -5,7 +5,7 @@ import { initiateGetProfile } from '../actions/profile';
 import { signIn } from '../actions/auth';
 import { history } from '../router/AppRouter';
 
-export const validateFields = (fieldsToValidate) => {
+export const validateFields = (fieldsToValidate) => { //makes sure form fields across entire app are not empty
   return fieldsToValidate.every((field) => Object.values(field)[0] !== '');
 };
 

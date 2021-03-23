@@ -20,9 +20,9 @@ CREATE TABLE TOKENS(
 
 CREATE TABLE account(
     account_id BIGSERIAL PRIMARY KEY NOT NULL,
-    account_no BIGINT NOT NULL,
+    payout_freq BIGINT NOT NULL,
     contract_name VARCHAR(50) NOT NULL,
-    ifsc VARCHAR(32) NOT NULL,
+    payout_amt VARCHAR(32) NOT NULL,
     userid INTEGER NOT NULL,
     total_balance BIGINT NOT NULL DEFAULT 0,
     FOREIGN KEY(userid) REFERENCES accrue_user(userid)

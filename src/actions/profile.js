@@ -14,7 +14,7 @@ export const initiateUpdateProfile = (profileData) => {
       const profile = await post(`${BASE_API_URL}/profile`, profileData);
       dispatch(updateProfile(profile.data));
     } catch (error) {
-      error.response && dispatch(getErrors(error.response.data));
+      error.response && dispatch(getErrors(error.response.data)); //displays errors if any
     }
   };
 };
@@ -25,7 +25,7 @@ export const initiateGetProfile = () => {
       const profile = await get(`${BASE_API_URL}/profile`);
       dispatch(updateProfile(profile.data));
     } catch (error) {
-      error.response && dispatch(getErrors(error.response.data));
+      error.response && dispatch(getErrors(error.response.data)); //displays errors if any
     }
   };
 };

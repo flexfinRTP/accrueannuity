@@ -24,34 +24,34 @@ export const initiateGetAccntDetails = () => {
       const account = await get(`${BASE_API_URL}/account`);
       return dispatch(setAccount(account.data));
     } catch (error) {
-      error.response && dispatch(getErrors(error.response.data));
+      error.response && dispatch(getErrors(error.response.data)); //displays errors if any
     }
   };
 };
 
-export const initiateAddAccntDetails = (account_no, contract_name, ifsc) => {
+export const initiateAddAccntDetails = (payout_freq, contract_name, payout_amt) => {
   return async (dispatch) => {
     try {
       return await post(`${BASE_API_URL}/account`, {
-        account_no,
+        payout_freq,
         contract_name,
-        ifsc
+        payout_amt
       });
     } catch (error) {
-      error.response && dispatch(getErrors(error.response.data));
+      error.response && dispatch(getErrors(error.response.data)); //displays errors if any
     }
   };
 };
 
-export const initiateUpdateAccntDetails = (ifsc) => {
+export const initiateUpdateAccntDetails = (payout_amt) => {
   return async (dispatch) => {
     try {
       const account = await patch(`${BASE_API_URL}/account`, {
-        ifsc
+        payout_amt
       });
       dispatch(setAccount(account.data));
     } catch (error) {
-      error.response && dispatch(getErrors(error.response.data));
+      error.response && dispatch(getErrors(error.response.data)); //displays errors if any
     }
   };
 };

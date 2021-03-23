@@ -1,15 +1,14 @@
-
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'; //connects react component to redux state
 import _ from 'lodash';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap'; //import form and button
 import { validateFields } from '../utils/common';
 
 class AddAccountForm extends React.Component {
   state = {
-    account_no: '',
+    payout_freq: '',
     contract_name: '',
-    ifsc: '',
+    payout_amt: '',
     errorMsg: ''
   };
 
@@ -28,8 +27,8 @@ class AddAccountForm extends React.Component {
 
   handleAddAccount = (event) => {
     event.preventDefault();
-    const { account_no, contract_name, ifsc } = this.state;
-    const fieldsToValidate = [{ account_no }, { contract_name }, { ifsc }];
+    const { payout_freq, contract_name, payout_amt } = this.state;
+    const fieldsToValidate = [{ payout_freq }, { contract_name }, { payout_amt }];
 
     const allFieldsEntered = validateFields(fieldsToValidate);
     if (!allFieldsEntered) {
@@ -44,7 +43,7 @@ class AddAccountForm extends React.Component {
   };
 
   render() {
-    const { account_no, contract_name, ifsc, errorMsg } = this.state;
+    const { payout_freq, contract_name, payout_amt, errorMsg } = this.state;
     return (
       <div className="edit-account-form  col-md-6 offset-md-3">
         <Form onSubmit={this.handleAddAccount} className="account-form">
@@ -55,33 +54,33 @@ class AddAccountForm extends React.Component {
             <Form.Label>Add account</Form.Label>
           </Form.Group>
           <hr />
-          <Form.Group controlId="accnt_no">
-            <Form.Label>Account number: </Form.Label>
-            <Form.Control
-              type="text"
-              name="account_no"
-              placeholder="Enter your account number"
-              value={account_no}
-              onChange={this.handleInputChange}
-            />
-          </Form.Group>
-          <Form.Group controlId="accnt_no">
+          <Form.Group controlId="contract_name">
             <Form.Label>Contract name: </Form.Label>
             <Form.Control
               type="text"
               name="contract_name"
-              placeholder="Enter your contract name"
+              placeholder="Enter Your Contract Name"
               value={contract_name}
               onChange={this.handleInputChange}
             />
           </Form.Group>
-          <Form.Group controlId="ifsc">
-            <Form.Label>IFSC Code:</Form.Label>
+          <Form.Group controlId="payout_freq">
+            <Form.Label>Payout Frequency:</Form.Label>
             <Form.Control
               type="text"
-              name="ifsc"
-              placeholder="Enter new IFSC code"
-              value={ifsc}
+              name="payout_freq"
+              placeholder="Enter Desired Payout Frequency in Minutes"
+              value={payout_freq}
+              onChange={this.handleInputChange}
+            />
+          </Form.Group>
+          <Form.Group controlId="payout_amt">
+            <Form.Label>Payout Amount:</Form.Label>
+            <Form.Control
+              type="text"
+              name="payout_amt"
+              placeholder="Enter Desired Payout Amount ($)"
+              value={payout_amt}
               onChange={this.handleInputChange}
             />
           </Form.Group>

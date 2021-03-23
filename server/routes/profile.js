@@ -1,5 +1,5 @@
-const express = require('express');
-const authMiddleware = require('../middleware/auth');
+const express = require('express'); //express server
+const authMiddleware = require('../middleware/auth'); //auth api
 const { pool } = require('../db/connect');
 const { isInvalidField } = require('../utils/common');
 const Router = express.Router();

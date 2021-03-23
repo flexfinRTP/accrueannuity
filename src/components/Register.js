@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { connect } from 'react-redux';
-import { Form, Button } from 'react-bootstrap';
+import { connect } from 'react-redux'; //connects react component to redux state
+import { Form, Button } from 'react-bootstrap'; //import form and button
 import { registerNewUser } from '../actions/auth';
 import { resetErrors } from '../actions/errors';
 import { validateFields } from '../utils/common';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'; //accessible nav throughout app
 
 const Register = (props) => {
   const [state, setState] = useState({

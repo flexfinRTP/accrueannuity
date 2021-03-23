@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import _ from 'lodash';
-import { connect } from 'react-redux';
-import { Form, Button } from 'react-bootstrap';
-import { initiateUpdateProfile } from '../actions/profile';
+import { connect } from 'react-redux'; //connects react component to redux state
+import { Form, Button } from 'react-bootstrap'; //import form and button
+import { initiateUpdateProfile } from '../actions/profile'; //update profile function
 import { validateFields } from '../utils/common';
 import { resetErrors } from '../actions/errors';
 
@@ -67,7 +67,7 @@ const Profile = (props) => {
     }
   };
 
-  const handleOnChange = (event) => {
+  const handleOnChange = (event) => { //update value of name
     const { name, value } = event.target;
     setState({
       ...state,
@@ -87,10 +87,15 @@ const Profile = (props) => {
             </p>
           )
         )}
+        <Form.Group>
+          <Form.Label>Name:</Form.Label>
+          <span className="label-value">{state.first_name} {state.last_name}</span>
+        </Form.Group>
         <Form.Group controlId="email">
-          <Form.Label>Email address:</Form.Label>
+          <Form.Label>Email Address:</Form.Label>
           <span className="label-value">{state.email}</span>
         </Form.Group>
+
         <Form.Group controlId="first_name">
           <Form.Label>First name:</Form.Label>
           <Form.Control
