@@ -17,7 +17,7 @@ Lock-in Money: The user will have the ability to send money to be vested for a u
 Recieve Money: The user will recieve their payout routinely until funds are exhausted from the contract.
 
 
-Dependencies
+### Dependencies
 
 yarn add
 xios@0.19.2
