@@ -4,7 +4,6 @@
 This app is a proof of concept fixed-income product using js React & Redux. The MVP for this product will be simple, sending money from Bob's wallet to a time-locked contract that will unlock at a time specified by Bob. Bob will be able to interact with the contract by expanding his interest-bearing position at the buy-in period and receiving fixed-income payments when the contract unlocks during the pay-out period.
 
 The dashboard displays are pertinent information relating to Bob's investment including accrue target and goal, current reward % offered, next payout amount & date, how much total payout is remaining, etc.  The user will find the app easy to use, have all information needed while only providing a few focused areas to engage the contract. This idea was an inspiration from a financial product called a simple annuity.
-<<<<<<< HEAD
 
 ### Features
 User Login: Users will create an account and log in to the application. Each user will have a unique, private account page.
@@ -16,7 +15,6 @@ Specify Contract Specs: User will be able to specify how much is to be vested an
 Lock-in Money: The user will have the ability to send money to be vested for a user-specified time period.
 
 Recieve Money: The user will recieve their payout routinely until funds are exhausted from the contract.
-
 
 ### How to Run
 
@@ -31,26 +29,9 @@ Recieve Money: The user will recieve their payout routinely until funds are exha
     <li>yarn start</li>
 </ul>
 
-
-### Dependencies
-=======
-
-### Features
-User Login: Users will create an account and log in to the application. Each user will have a unique, private account page.
-
-Goal Setting: Users will be able to set a number value as a goal to save up to and give a name to that goal.
-
-Specify Contract Specs: User will be able to specify how much is to be vested and for how long. User will specify payout date and amount. Reward is calculated from length of investment.
-
-Lock-in Money: The user will have the ability to send money to be vested for a user-specified time period.
-
-Recieve Money: The user will recieve their payout routinely until funds are exhausted from the contract.
-
-
 ### Dependencies
 
 yarn add
->>>>>>> b9a488d976552d82a87ccd51f0f357de1868e8b3
 axios@0.19.2
 bootstrap@4.4.1
 history@4.10.1
