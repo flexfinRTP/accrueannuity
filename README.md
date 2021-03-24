@@ -38,7 +38,7 @@ history@4.10.1
 jwt-decode@2.2.0
 lodash@4.17.15
 moment@2.25.3
-node-sass@5.0.0
+node-sass@4.14.1
 react-bootstrap@1.0.1
 react-redux@7.2.0
 react-router-dom@5.1.2
@@ -64,3 +64,5 @@ On Windows - fsevents
 Since fsevent is an optional dependency, the workaround is to run npm install with no-optional flag.
 
 npm install --no-optional
+
+There are some crazy unresolved dependency issues between node-sass, node-gyp, node.js and python. For this app to work properly, please have the following versions installed...Node.js version 15.9.0, node-gyp -v 7.1.2, python 2.7 & python 3.9, and node-sass v4.14.1. Trust me, I've been down that rabbit hole.
