@@ -109,12 +109,12 @@ class AccountForm extends React.Component {
                     errorMsg: ''
                 });
             } else if (selectedType === 'summary') {
-                this.props.dispatch(account.account_id);
+                this.props.dispatch(account.account_id, amount);
                 this.setState({
                     errorMsg: ''
                 });
             } else if (selectedType === 'locked') {
-                //this.props.dispatch(account.account_id);
+                this.props.dispatch(account.account_id);
                 this.setState({
                     errorMsg: ''
                 });

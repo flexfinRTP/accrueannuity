@@ -48,7 +48,7 @@ const Login = (props) => { //initialize login state empty
     const { name, value } = event.target;
 
     setState({
-      ...state, //email, pass defined
+      ...state, //current state, email, pass are defined
       [name]: value
     });
   };

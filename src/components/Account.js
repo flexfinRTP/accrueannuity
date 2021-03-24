@@ -78,8 +78,8 @@ class Account extends React.Component {
 
         </div>
         <div>
-          {selectedType === 'withdraw' || selectedType === 'deposit' ? ( //tells to display withdraw, deposit condit from AccountForm. if false display Summary
-            <AccountForm selectedType={selectedType} />
+          {selectedType === 'withdraw' || selectedType === 'deposit' || selectedType === 'locked' ? ( //tells to display withdraw, deposit condit from AccountForm. if false display Summary
+            <AccountForm selectedType={selectedType} /> //displays selectedType only
           ) : (
             <Summary />
           )}

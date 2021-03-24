@@ -2,64 +2,34 @@ import React from 'react';
 import { connect } from 'react-redux'; //connects react component to redux state
 import { Form, Button } from 'react-bootstrap'; //import form and button
 import AccountForm from './AccountForm';
+import _ from 'lodash';
+import Moment from 'moment';
+import App from './CountdownTimer';
+import CountdownTimer from './CountdownTimer';
 
-class Summary extends React.Component { //timer counting in UNIX
-  constructor(props) {
-    super(props)
-    this.state = {
+
+class Summary extends React.Component {
+    state = {
       account: this.props.account,
-      time: 0,
-      isOn: false,
-      start: 0
+      //amount: '',
+      //editAccount: false,
+      //payout_amt: '',
+      //errorMsg: ''
     }
-    this.startTimer = this.startTimer.bind(this)
-    this.stopTimer = this.stopTimer.bind(this)
-    this.resetTimer = this.resetTimer.bind(this)
-  }
-  startTimer() {
-    this.setState({
-      isOn: true,
-      time: this.state.time,
-      start: Date.now() - this.state.time
-    })
-    this.timer = setInterval(() => this.setState({
-      time: Date.now() - this.state.start
-    }), 1);
-  }
-  stopTimer() {
-    this.setState({ isOn: false })
-    clearInterval(this.timer)
-  }
-  resetTimer() {
-    this.setState({ time: 0, isOn: false }) //
-  }
 
   render() {
-    const { selectedType } = this.props;
+    //const { selectedType } = this.props;
 
     const { account } = this.props;
     //const type = selectedType.charAt(0).toUpperCase() + selectedType.slice(1);
 
-
-    let start = (this.state.time === 0) ?
-      <button onClick={this.startTimer}>start</button> :
-      null
-    let stop = (this.state.time === 0 || !this.state.isOn) ?
-      null :
-      <button onClick={this.stopTimer}>stop</button>
-    let resume = (this.state.time === 0 || this.state.isOn) ?
-      null :
-      <button onClick={this.startTimer}>resume</button>
-    let reset = (this.state.time === 0 || this.state.isOn) ?
-      null :
-      <button onClick={this.resetTimer}>reset</button>
     return (
-      <div>
+      <div className="summary-main">
         <div>
           <Form.Group controlId="contract_name">
             <Form.Label>Contract Name:</Form.Label>
             <span className="label-value">
-              {this.account && this.account.contract_name}
+              {account && account.contract_name}
             </span>
           </Form.Group>
           <Form.Group controlId="payout_freq">
@@ -70,14 +40,40 @@ class Summary extends React.Component { //timer counting in UNIX
             <Form.Label>Payout Amount:</Form.Label>
             <span className="label-value">${account && account.payout_amt}</span>
           </Form.Group>
+          <Form.Group controlId="accnt_no">
+            <Form.Label>Available Balance: $</Form.Label>
+            <span className="label-value">
+              {account && account.total_balance}
+            </span>
+          </Form.Group>
         </div>
 
         <br></br>
 
         <div>
+          <h3>Time Until Next Payment:</h3>
+          <CountdownTimer />
+        </div>
+
+        <br></br>
+
+        <div className="interest-rate">
           <table>
             <tr>
-              <th></th>
+              <th>Interest Rate:</th>
+            </tr>
+            <tr>
+              <td>5%</td>
+            </tr>
+          </table>
+        </div>
+
+        <br></br><br></br>
+
+        <div>
+          <table>
+            <tr>
+              <th>Date</th>
               <th>Deposit/Withdraw</th>
               <th>Amount</th>
               <th>Balance</th>
@@ -90,29 +86,6 @@ class Summary extends React.Component { //timer counting in UNIX
             </tr>
           </table>
         </div>
-
-        <br></br>
-
-        <div>
-          <table>
-            <tr>
-              <th>Interest Rate:</th>
-            </tr>
-            <tr>
-              <td id="rate">5%</td>
-            </tr>
-          </table>
-        </div>
-
-        <br></br>
-
-        <div>
-          <h3>timer: {(this.state.time)}</h3>
-          {start}
-          {resume}
-          {stop}
-          {reset}
-        </div>
       </div>
     )
   }
@@ -120,4 +93,10 @@ class Summary extends React.Component { //timer counting in UNIX
 //table needs dynamic variables described above
 //rate needs dynamic variable for implementation into contract
 
-export default connect()(Summary);
+const mapStateToProps = (state) => ({
+  email: state.auth && state.auth.email,
+  account: state.account,
+  errors: state.errors
+});
+
+export default connect(mapStateToProps)(Summary);

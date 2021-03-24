@@ -309,12 +309,22 @@ input[type='submit'],
 table, th, td {
   margin-left: auto;
   margin-right: auto;
-  border: 1px solid black;
-  padding: 10px;
+  border: 2px solid black;
   text-align: center;
 }
-#rate {
-  
-  font-size: 50px;
-  @extend %centered
+th, td {
+  padding: 10px
+}
+.interest-rate {
+  text-align: center;
+}
+
+.locked-main {
+  text-align: center;
+}
+#contract-locked {
+  color: red
+}
+.summary-main {
+  text-align: center;
 }

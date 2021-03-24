@@ -1,4 +1,5 @@
 import { SET_ACCOUNT, UPDATE_ACCOUNT, RESET_ACCOUNT } from '../utils/constants';
+//import moment from 'moment';
 
 const accountReducer = (state = {}, action) => {
   switch (action.type) {
@@ -20,7 +21,7 @@ const accountReducer = (state = {}, action) => {
       } else if (action.operation === 'locked') {
         return {
           ...state,
-          total_balance: state.total_balance //need moment, luxon or other time based dependency
+          total_balance: +state.total_balance - +action.amountToChange//need moment, luxon or other time based dependency
         };
       }
       break;
