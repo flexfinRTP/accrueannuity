@@ -20,7 +20,7 @@ Router.post('/profile', authMiddleware, async (req, res) => {
         update_error: 'Invalid field.'
       });
     }
-    const result = await pool.query(
+    const result = await pool.query( //update first name, last name and email
       'update accrue_user set first_name=$1,last_name=$2 where userid=$3 returning userid,first_name,last_name,email',
       [first_name, last_name, req.user.userid]
     );

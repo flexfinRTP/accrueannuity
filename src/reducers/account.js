@@ -6,7 +6,7 @@ const accountReducer = (state = {}, action) => {
       return {
         ...action.accountDetails.account
       };
-    case UPDATE_ACCOUNT:
+    case UPDATE_ACCOUNT: //withdraw func timer goes here
       if (action.operation === 'withdraw') {
         return {
           ...state,
@@ -16,6 +16,11 @@ const accountReducer = (state = {}, action) => {
         return {
           ...state,
           total_balance: +state.total_balance + +action.amountToChange
+        };
+      } else if (action.operation === 'locked') {
+        return {
+          ...state,
+          total_balance: state.total_balance //need moment, luxon or other time based dependency
         };
       }
       break;

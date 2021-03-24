@@ -94,17 +94,27 @@ class AccountForm extends React.Component {
                         : 'add_error']: 'Please enter an amount to withdraw.'
                 }
             });
-        } else {
+        } else { // dispatch objects when button is selected
             let { total_balance } = account;
             amount = +amount;
             total_balance = +total_balance;
-            if (selectedType === 'withdraw' && amount <= total_balance) {
+            if (selectedType === 'withdraw' && amount <= total_balance) { //withdraw conditional
                 this.props.dispatch(initiateWithdrawAmount(account.account_id, amount));
                 this.setState({
                     errorMsg: ''
                 });
-            } else if (selectedType === 'deposit') {
+            } else if (selectedType === 'deposit') { //deposit conditional
                 this.props.dispatch(initiateDepositAmount(account.account_id, amount));
+                this.setState({
+                    errorMsg: ''
+                });
+            } else if (selectedType === 'summary') {
+                this.props.dispatch(account.account_id);
+                this.setState({
+                    errorMsg: ''
+                });
+            } else if (selectedType === 'locked') {
+                //this.props.dispatch(account.account_id);
                 this.setState({
                     errorMsg: ''
                 });
@@ -156,13 +166,13 @@ class AccountForm extends React.Component {
                                 {account && account.contract_name}
                             </span>
                         </Form.Group>
-                        <Form.Group controlId="acc_no">
-                            <Form.Label>Payout Frequency(mins):</Form.Label>
-                            <span className="label-value">{account && payout_freq}</span>
+                        <Form.Group controlId="payout_freq">
+                            <Form.Label>Payout Frequency:</Form.Label>
+                            <span className="label-value">{account && payout_freq} minutes</span>
                         </Form.Group>
                         <Form.Group controlId="payout_amt">
-                            <Form.Label>Payout Amount: $</Form.Label>
-                            <span className="label-value">{account && account.payout_amt}</span>
+                            <Form.Label>Payout Amount:</Form.Label>
+                            <span className="label-value">${account && account.payout_amt}</span>
                             <Form.Control
                                 type="text"
                                 placeholder="Enter Desired Payout Amount ($)"

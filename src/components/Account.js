@@ -3,18 +3,42 @@ import { connect } from 'react-redux'; //connects react component to redux state
 import { Button } from 'react-bootstrap'; //import button
 import AccountForm from './AccountForm';
 import Summary from './Summary';
+import { history } from '../router/AppRouter';
+import Locked from './Locked';
 
 class Account extends React.Component {
-  state = {
-    selectedType: 'withdraw'
-  };
+  constructor() {
+    super();
+    this.state = {
+      selectedType: 'withdraw',
+    };
+  }
 
-  setSelectedType = (selectedType) => {
+
+  setSelectedType = (selectedType) => { //sets selectedtype state depending on button onclick
     this.setState({ selectedType });
   };
 
+
+  
+
   render() {
-    const { selectedType } = this.state;
+    const { selectedType } = this.state; //current selectedType
+    
+
+    // const currentType = [ ...selectedType ]; //array of types to delete
+
+    // const indexType = currentType.findIndex(selectedType); //find index of currentType selected
+
+    // if (indexType === 'locked') { //if index in selectedType array is 'locked' then splice other selectedtypes from appearing
+    //   currentType.splice(indexType, 1);
+    // } else {
+    //   currentType.push(selectedType); //else push the selectedtype normally
+    // }
+
+    // this.setState({ //set currentType(selectedType) as the current array only
+    //   currentType: indexType,
+    // })
 
     return (
       <div>
@@ -43,9 +67,18 @@ class Account extends React.Component {
           >
             Summary
           </Button>
+
+
+          <button className={`${selectedType === 'locked' ? 'active account-btn' : 'account-btn'
+              }`}
+          onClick={() => {this.setSelectedType('locked'); history.push('/Locked')}}>
+            Click to Lock in
+          </button>
+
+
         </div>
         <div>
-          {selectedType === 'withdraw' || selectedType === 'deposit' ? (
+          {selectedType === 'withdraw' || selectedType === 'deposit' ? ( //tells to display withdraw, deposit condit from AccountForm. if false display Summary
             <AccountForm selectedType={selectedType} />
           ) : (
             <Summary />
