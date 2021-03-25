@@ -1,20 +1,16 @@
 # Accrue Annuity Web App
 
 ### Overview
-This app is a proof of concept fixed-income product using js React & Redux. The MVP for this product will be simple, sending money from Bob's wallet to a time-locked contract that will unlock at a time specified by Bob. Bob will be able to interact with the contract by expanding his interest-bearing position at the buy-in period and receiving fixed-income payments when the contract unlocks during the pay-out period.
-
-The dashboard displays are pertinent information relating to Bob's investment including accrue target and goal, current reward % offered, next payout amount & date, how much total payout is remaining, etc.  The user will find the app easy to use, have all information needed while only providing a few focused areas to engage the contract. This idea was an inspiration from a financial product called a simple annuity.
+This app is a proof of concept fixed-income product using js React & Redux. The MVP for this product will be as follows; the user will be able to customize their contract, expand their interest-bearing position at the buy-in period and receive fixed-income payments when the contract is locked during the annuitization period. The dashboard displays only pertinent information relating to the user's investment including contract details, current interest rate offered, next payout amount & date, how much total payout is remaining, etc.  The user will find the app easy to use, have all information needed while only providing a few focused areas to engage the contract. This idea was an inspiration from a financial product called a period-certain annuity.
 
 ### Features
-User Login: Users will create an account and log in to the application. Each user will have a unique, private account page.
+User Login: Users will create an account and log in to the application. Each user will have a unique account page containing their contract.
 
-Goal Setting: Users will be able to set a number value as a goal to save up to and give a name to that goal.
+Lock-in Money: The user will have the ability to deposit money to be vested for a user-specified time period.
 
-Specify Contract Specs: User will be able to specify how much is to be vested and for how long. User will specify payout date and amount. Reward is calculated from length of investment.
+Recieve Money: The user will recieve their payout routinely, at the user's specification, until funds are exhausted from the contract.
 
-Lock-in Money: The user will have the ability to send money to be vested for a user-specified time period.
-
-Recieve Money: The user will recieve their payout routinely until funds are exhausted from the contract.
+Specify Contract Specs: User will be able to specify the name of the contract, the payout frequency and amount of each payout.
 
 ### How to Run
 
@@ -65,4 +61,6 @@ Since fsevent is an optional dependency, the workaround is to run npm install wi
 
 npm install --no-optional
 
-There are some crazy unresolved dependency issues between node-sass, node-gyp, node.js and python. For this app to work properly, please have the following versions installed...Node.js version 15.9.0, node-gyp -v 7.1.2, python 2.7 & python 3.9, and node-sass v4.14.1. Trust me, I've been down that rabbit hole.
+*There are some crazy unresolved dependency issues between node-sass, node-gyp, node.js and python. This app will be refactored using sass in the future. The current workaround is to have the following versions of these dependencies installed...
+Node.js version 15.9.0, node-gyp -v 7.1.2, python 2.7 & python 3.9, and node-sass v4.14.1.
+

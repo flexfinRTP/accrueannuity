@@ -1,25 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { connect } from 'react-redux'; //connects react component to redux state
 import Moment from 'moment';
+import Summary from './Summary';
+import { account, payout_freq } from './Summary';
 //import logo from './logo.svg';
 
-class Example extends React.Component {
+class CountdownTimer extends React.Component {
+
     constructor() {
         super();
-        this.state = { time: {}, seconds: 90 };
+
+        this.state = { time: {}, seconds: 60 };
         this.timer = 0;
         this.startTimer = this.startTimer.bind(this);
         this.countDown = this.countDown.bind(this);
+        
+        //this.payout_freq = this.props.payout_freq
+
     }
 
     secondsToTime(secs) {
         let hours = Math.floor(secs / (60 * 60));
 
-        let divisor_for_minutes = secs % (60 * 60);
-        let minutes = Math.floor(divisor_for_minutes / 60);
+        let minutesFormula = secs % (60 * 60);
+        let minutes = Math.floor(minutesFormula / 60);
 
-        let divisor_for_seconds = divisor_for_minutes % 60;
-        let seconds = Math.ceil(divisor_for_seconds);
+        let secondsFormula = minutesFormula % 60;
+        let seconds = Math.ceil(secondsFormula);
 
         let obj = {
             "h": hours,
@@ -30,8 +37,8 @@ class Example extends React.Component {
     }
 
     componentDidMount() {
-        let timeLeftVar = this.secondsToTime(this.state.seconds);
-        this.setState({ time: timeLeftVar });
+        const timeLeft = this.secondsToTime(this.state.seconds);
+        this.setState({ time: timeLeft });
     }
 
     startTimer() {
@@ -42,33 +49,45 @@ class Example extends React.Component {
 
     countDown() {
         // Remove one second, set state so a re-render happens.
-        let seconds = this.state.seconds - 1;
+        const seconds = this.state.seconds - 1;
         this.setState({
             time: this.secondsToTime(seconds),
             seconds: seconds,
         });
 
-        // Check if we're at zero.
+        // Check if we're at zero, than reset to user specified payout_freq
         if (seconds === 0) {
-            clearInterval(this.timer);
+            //clearInterval(this.timer);
+            this.setState({
+                time: this.secondsToTime(seconds),
+                seconds: 60 //needs to be payout_freq not static #
+            })
         }
     }
 
     render() {
         return (
             <div>
-            {this.state.time.m} minutes {this.state.time.s} seconds
-            <br></br>
-            <button onClick={this.startTimer}>Start </button>
+                {this.state.time.m} minutes {this.state.time.s} seconds
                 <br></br>
+                <button onClick={this.startTimer}>Start </button>
+                <br></br>
+
+                <p>{this.props.currTime}</p>
             </div>
-        );
+        ); //onClick={this.startTimer}
     }
 }
+
+const mapStateToProps = (state) => ({
+    email: state.auth && state.auth.email,
+    account: state.account,
+    errors: state.errors
+  });
 // ? = if time is not up, display timer. : = else/false, then display text
 
 
 //need countdown timer to reset at 0 and restart specified payment_freq (90sec)
 //timer should not reset on page refresh, component mount issue.
 
-export default connect()(Example);
+export default connect(mapStateToProps)(CountdownTimer);

@@ -22,7 +22,9 @@ class AccountForm extends React.Component {
         account: this.props.account,
         editAccount: false,
         payout_amt: '',
-        errorMsg: ''
+        errorMsg: '',
+
+        payout_freq: this.props.payout_freq
     };
 
     componentDidMount() {
@@ -141,7 +143,7 @@ class AccountForm extends React.Component {
         const { selectedType } = this.props;
         const { editAccount, payout_amt, errorMsg, account } = this.state;
         const payout_freq = account.payout_freq;
-        const type = selectedType.charAt(0).toUpperCase() + selectedType.slice(1);
+        const type = selectedType.charAt(0).toUpperCase() + selectedType.slice(1); //renders only selectedType
         return payout_freq ? (
             editAccount ? (
                 <div className="edit-account-form  col-md-6 offset-md-3">
@@ -175,6 +177,7 @@ class AccountForm extends React.Component {
                             <span className="label-value">${account && account.payout_amt}</span>
                             <Form.Control
                                 type="text"
+                                min="0"
                                 placeholder="Enter Desired Payout Amount ($)"
                                 value={payout_amt}
                                 onChange={this.handleInputChange}
@@ -222,10 +225,17 @@ class AccountForm extends React.Component {
                                 {account && account.total_balance}
                             </span>
                         </Form.Group>
+                        {/* <Form.Group controlId="accnt_no">
+                            <Form.Label>Contract Balance: $</Form.Label>
+                            <span className="label-value">
+                                {account && account.total_balance}
+                            </span>
+                        </Form.Group> */}
                         <Form.Group controlId="amount">
                             <Form.Label>Amount:</Form.Label>
                             <Form.Control
                                 type="number"
+                                min="0"
                                 placeholder={`Enter amount to ${selectedType}`}
                                 value={this.state.amount}
                                 onChange={this.handleAmountChange}

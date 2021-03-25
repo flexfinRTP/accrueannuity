@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'; //connects react component to redux state
-import { Button } from 'react-bootstrap'; //import button
+import { Form, Button } from 'react-bootstrap'; //import button
 import AccountForm from './AccountForm';
 import Summary from './Summary';
 import { history } from '../router/AppRouter';
@@ -44,15 +44,7 @@ class Locked extends React.Component {
         </div>
 
         <div>
-          <h2>Time Until Next Payment:</h2>
-          <CountdownTimer />
-        </div>
-
-        <br></br>
-
-        <div>
-          <h3>Random Timer</h3>
-          <Timer />
+          <Summary />
         </div>
 
       </div>

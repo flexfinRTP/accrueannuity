@@ -3,7 +3,7 @@ import { getErrors } from './errors';
 import { SET_ACCOUNT, UPDATE_ACCOUNT, RESET_ACCOUNT } from '../utils/constants';
 import { get, patch, post } from '../utils/api';
 
-export const setAccount = (accountDetails) => ({
+export const setAccount = (accountDetails) => ({ 
   type: SET_ACCOUNT,
   accountDetails
 });

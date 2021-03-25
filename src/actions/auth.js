@@ -21,7 +21,7 @@ export const initiateLogin = (email, password) => {
       const user = result.data;
       localStorage.setItem('user_token', user.token);
       dispatch(signIn(user));
-      dispatch(initiateGetProfile(user.email));
+      dispatch(initiateGetProfile(user.email)); //gets email
       history.push('/profile');
     } catch (error) {
       console.log('error', error);
@@ -33,7 +33,7 @@ export const initiateLogin = (email, password) => {
 export const registerNewUser = (data) => {
   return async (dispatch) => {
     try {
-      await axios.post(`${BASE_API_URL}/signup`, data);
+      await axios.post(`${BASE_API_URL}/signup`, data); //posts to server a new user
       return { success: true };
     } catch (error) {
       console.log('error', error);

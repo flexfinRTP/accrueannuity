@@ -4,7 +4,6 @@ import { Form, Button } from 'react-bootstrap'; //import form and button
 import AccountForm from './AccountForm';
 import _ from 'lodash';
 import Moment from 'moment';
-import App from './CountdownTimer';
 import CountdownTimer from './CountdownTimer';
 
 
@@ -15,6 +14,7 @@ class Summary extends React.Component {
       //editAccount: false,
       //payout_amt: '',
       //errorMsg: ''
+      payout_freq: this.props.payout_freq
     }
 
   render() {
@@ -52,7 +52,11 @@ class Summary extends React.Component {
 
         <div>
           <h3>Time Until Next Payment:</h3>
-          <CountdownTimer />
+          <CountdownTimer 
+          currTime={this.payout_freq}
+          state={account.payout_freq} //pass payout_freq as the current state of countdownTimer
+          seconds={account.payout_freq}
+          />
         </div>
 
         <br></br>
@@ -68,9 +72,9 @@ class Summary extends React.Component {
           </table>
         </div>
 
-        <br></br><br></br>
+        {/* <br></br><br></br> */}
 
-        <div>
+        {/* <div>
           <table>
             <tr>
               <th>Date</th>
@@ -85,7 +89,8 @@ class Summary extends React.Component {
               <td>$100</td>
             </tr>
           </table>
-        </div>
+        </div> */}
+
       </div>
     )
   }

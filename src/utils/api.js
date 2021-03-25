@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios from 'axios'; //get request to server
 import { setAuthHeader, removeAuthHeader } from './common';
 
-export const get = async (
+export const get = async ( //get func
   url,
   params,
   shouldSetAuthHeader = true,
@@ -17,7 +17,7 @@ export const get = async (
   return result;
 };
 
-export const post = async (
+export const post = async ( //post func
   url,
   params,
   shouldSetAuthHeader = true,
@@ -33,7 +33,7 @@ export const post = async (
   return result;
 };
 
-export const patch = async (
+export const patch = async ( //patch func
   url,
   params,
   shouldSetAuthHeader = true,

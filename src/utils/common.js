@@ -9,21 +9,21 @@ export const validateFields = (fieldsToValidate) => { //makes sure form fields a
   return fieldsToValidate.every((field) => Object.values(field)[0] !== '');
 };
 
-export const maintainSession = () => {
-  const user_token = localStorage.getItem('user_token');
+export const maintainSession = () => { 
+  const user_token = localStorage.getItem('user_token'); //gets json token
   if (user_token) {
-    const currentPath = window.location.pathname;
-    if (currentPath === '/' || currentPath === '/register') {
+    const currentPath = window.location.pathname; //sets 
+    if (currentPath === '/' || currentPath === '/register') { //push register details inot profile
       history.push('/profile');
     }
-    const decoded = jwt_decode(user_token);
-    updateStore(decoded);
+    const decoded = jwt_decode(user_token); //decode token
+    updateStore(decoded); //update store with decoded password
   } else {
     history.push('/');
   }
 };
 
-export const updateStore = (user) => {
+export const updateStore = (user) => { //update store state with userid, email, token
   const { userid, email } = user;
   store.dispatch(
     signIn({

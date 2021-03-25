@@ -55,7 +55,7 @@ class AddAccountForm extends React.Component {
           </Form.Group>
           <hr />
           <Form.Group controlId="contract_name">
-            <Form.Label>Contract name: </Form.Label>
+            <Form.Label>Contract Name: </Form.Label>
             <Form.Control
               type="text"
               name="contract_name"

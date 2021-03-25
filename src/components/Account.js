@@ -10,21 +10,18 @@ class Account extends React.Component {
   constructor() {
     super();
     this.state = {
-      selectedType: 'withdraw',
+      selectedType: 'withdraw', //default selectedType
     };
   }
-
 
   setSelectedType = (selectedType) => { //sets selectedtype state depending on button onclick
     this.setState({ selectedType });
   };
 
-
-  
-
   render() {
-    const { selectedType } = this.state; //current selectedType
+    const { selectedType } = this.state; //display current selectedType
     
+
 
     // const currentType = [ ...selectedType ]; //array of types to delete
 
@@ -40,7 +37,9 @@ class Account extends React.Component {
     //   currentType: indexType,
     // })
 
-    return (
+
+
+    return ( //display buttons and give them a selectedType so only that component will show
       <div>
         <div className="account">
           <Button
