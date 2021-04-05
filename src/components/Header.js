@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'; //uses link to specify a specific path by using Link to (use exact to only display that path)
 
 const Header = () => {
 

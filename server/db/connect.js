@@ -8,7 +8,7 @@ const pool = new Pool({ //env variables for Postgres
   database: 'accrue_user'
 });
 
-const getClient = async () => { //app is connected to Postgres
+const getClient = async () => { //app is connected to Postgres, client is sent sql commands
   try {
     const client = await pool.connect();
     return client;

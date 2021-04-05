@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux'; //connects react component to redux state
+import { connect } from 'react-redux'; //connects react component to redux store
 import _ from 'lodash';
 import { Form, Button } from 'react-bootstrap'; //import form and button
 import { validateFields } from '../utils/common';

@@ -64,7 +64,7 @@ const Login = (props) => { //initialize login state empty
             <p className="errorMsg centered-message">{errorMsg.signin_error}</p>
           )}
           <Form.Group controlId="email">
-            <Form.Label>Email address</Form.Label>
+            <Form.Label>Email Address</Form.Label>
             <Form.Control
               type="email"
               name="email"

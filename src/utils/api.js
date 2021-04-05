@@ -1,5 +1,5 @@
-import axios from 'axios'; //get request to server
-import { setAuthHeader, removeAuthHeader } from './common';
+import axios from 'axios'; //GET, requests to an API end point, server
+import { setAuthHeader, removeAuthHeader } from './common'; //imports auth page headers
 
 export const get = async ( //get func
   url,
@@ -7,17 +7,17 @@ export const get = async ( //get func
   shouldSetAuthHeader = true,
   shouldRemoveAuthHeader = false
 ) => {
-  if (shouldSetAuthHeader) {
+  if (shouldSetAuthHeader) { //if shouldSetAuthHeader is true, remove the display for header
     setAuthHeader();
   }
-  const result = await axios.get(url, params);
+  const result = await axios.get(url, params); //if shouldRemoveAuthHeader is false, display the header
   if (shouldRemoveAuthHeader) {
     removeAuthHeader();
   }
   return result;
 };
 
-export const post = async ( //post func
+export const post = async ( //post async func, send props and params to server, update result
   url,
   params,
   shouldSetAuthHeader = true,
@@ -33,7 +33,7 @@ export const post = async ( //post func
   return result;
 };
 
-export const patch = async ( //patch func
+export const patch = async ( //patch async func, send props and params to server, update result
   url,
   params,
   shouldSetAuthHeader = true,

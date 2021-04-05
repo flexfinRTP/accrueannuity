@@ -3,24 +3,35 @@ import { connect } from 'react-redux'; //connects react component to redux state
 import { Form, Button } from 'react-bootstrap'; //import form and button
 import AccountForm from './AccountForm';
 import _ from 'lodash';
-import Moment from 'moment';
+import moment from 'moment';
 import CountdownTimer from './CountdownTimer';
+import Report from './Report';
+import {
+  initiateGetTransactions,
+} from '../actions/transactions';
 
 
 class Summary extends React.Component {
-    state = {
-      account: this.props.account,
-      //amount: '',
-      //editAccount: false,
-      //payout_amt: '',
-      //errorMsg: ''
-      payout_freq: this.props.payout_freq
-    }
+  state = {
+    account: this.props.account,
+    //amount: '',
+    //editAccount: false,
+    //payout_amt: '',
+    //errorMsg: ''
+    payout_freq: this.props.payout_freq,
+    startDate: new Date(),
+    endDate: new Date(),
+    transactions: [],
+    isDownloading: false,
+    formSubmitted: false,
+    errorMsg: ''
+  }
 
   render() {
     //const { selectedType } = this.props;
 
     const { account } = this.props;
+    const { transactions } = this.state;
     //const type = selectedType.charAt(0).toUpperCase() + selectedType.slice(1);
 
     return (
@@ -52,10 +63,10 @@ class Summary extends React.Component {
 
         <div>
           <h3>Time Until Next Payment:</h3>
-          <CountdownTimer 
-          currTime={this.payout_freq}
-          state={account.payout_freq} //pass payout_freq as the current state of countdownTimer
-          seconds={account.payout_freq}
+          <CountdownTimer
+            currTime={this.payout_freq}
+            state={account.payout_freq} //pass payout_freq as the current state of countdownTimer
+            seconds={account.payout_freq}
           />
         </div>
 
@@ -70,6 +81,10 @@ class Summary extends React.Component {
               <td>5%</td>
             </tr>
           </table>
+        </div>
+
+        <div>
+          <Report transactions={transactions} />
         </div>
 
         {/* <br></br><br></br> */}
@@ -101,6 +116,7 @@ class Summary extends React.Component {
 const mapStateToProps = (state) => ({
   email: state.auth && state.auth.email,
   account: state.account,
+  transactions: state.transactions,
   errors: state.errors
 });
 

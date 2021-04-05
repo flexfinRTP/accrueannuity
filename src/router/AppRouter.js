@@ -13,7 +13,6 @@ import Header from '../components/Header';
 import Logout from '../components/Logout';
 import Account from '../components/Account';
 
-
 import Locked from '../components/Locked';
 
 

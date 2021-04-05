@@ -1,6 +1,6 @@
 import React from 'react';
 import { Form, Button } from 'react-bootstrap'; //import form and button
-import { connect } from 'react-redux'; //connects react component to redux state
+import { connect } from 'react-redux'; //connects react component to redux store
 import _ from 'lodash';
 import {
     initiateGetAccntDetails,
@@ -30,12 +30,12 @@ class AccountForm extends React.Component {
     componentDidMount() {
         const { email } = this.props;
         if (email) {
-            this.props.dispatch(initiateGetAccntDetails());
+            this.props.dispatch(initiateGetAccntDetails()); //calls initiateGetAccntDetails
         }
     }
 
     componentWillUnmount() {
-        this.props.dispatch(resetErrors());
+        this.props.dispatch(resetErrors()); //calls reset errors
     }
 
     componentDidUpdate(prevProps) {
@@ -50,7 +50,7 @@ class AccountForm extends React.Component {
     handleUpdateAccount = (payout_amt) => {
         const fieldsToValidate = [{ payout_amt }];
 
-        const allFieldsEntered = validateFields(fieldsToValidate); //is field filled out, if not throw error
+        const allFieldsEntered = validateFields(fieldsToValidate); //is payout_amt field filled out, if not throw error
         if (!allFieldsEntered) {
             this.setState({
                 errorMsg: {
@@ -59,9 +59,9 @@ class AccountForm extends React.Component {
             });
         } else {
             this.setState({
-                errorMsg: ''
+                errorMsg: '' //no error displayed
             });
-            this.props.dispatch(initiateUpdateAccntDetails(payout_amt));
+            this.props.dispatch(initiateUpdateAccntDetails(payout_amt)); //calls updateaccntdetails payout_amt prop 
         }
     };
 
@@ -253,10 +253,18 @@ class AccountForm extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => ({
-    email: state.auth && state.auth.email,
-    account: state.account,
-    errors: state.errors
+const mapStateToProps = (state) => ({ //get new items from the state, get state from redux and map it to props of component and use inside of component. state as param
+    email: state.auth && state.auth.email, //email prop is set to the state of auth and email
+    account: state.account, //account prop is set to state of account
+    errors: state.errors //errors prop is set to state of errors
 });
 
 export default connect(mapStateToProps)(AccountForm);
+
+//EXTRA NOTES
+///...copy of state (spread) use to add to state
+
+// ternary operator == ? is true, : is false
+
+//propTypes can set props to certain type only, payout_amt: PropTypes.int or double
+//propTypes can be func, array, object, string...etc

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { connect } from 'react-redux'; //connects react component to redux state
+import { connect } from 'react-redux'; //connects react component to redux store
 import Moment from 'moment';
 import Summary from './Summary';
 import { account, payout_freq } from './Summary';
@@ -7,8 +7,8 @@ import { account, payout_freq } from './Summary';
 
 class CountdownTimer extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = { time: {}, seconds: 60 };
         this.timer = 0;
@@ -60,7 +60,7 @@ class CountdownTimer extends React.Component {
             //clearInterval(this.timer);
             this.setState({
                 time: this.secondsToTime(seconds),
-                seconds: 60 //needs to be payout_freq not static #
+                seconds: 3600 //needs to be payout_freq not static #
             })
         }
     }

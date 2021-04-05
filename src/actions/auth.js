@@ -21,7 +21,7 @@ export const initiateLogin = (email, password) => {
       const user = result.data;
       localStorage.setItem('user_token', user.token);
       dispatch(signIn(user));
-      dispatch(initiateGetProfile(user.email)); //gets email
+      dispatch(initiateGetProfile(user.email)); //gets email, user is a key
       history.push('/profile');
     } catch (error) {
       console.log('error', error);

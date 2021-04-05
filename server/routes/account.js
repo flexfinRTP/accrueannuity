@@ -1,5 +1,5 @@
 const express = require('express'); //express server
-const authMiddleware = require('../middleware/auth'); //auth api
+const authMiddleware = require('../middleware/auth'); //middleware allows dispatch
 const { pool } = require('../db/connect');
 const Router = express.Router();
 

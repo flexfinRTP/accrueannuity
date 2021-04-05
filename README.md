@@ -1,7 +1,7 @@
 # Accrue Annuity Web App
 
 ### Overview
-This app is a proof of concept fixed-income product using js React & Redux. The MVP for this product will be as follows; the user will be able to customize their contract, expand their interest-bearing position at the buy-in period and receive fixed-income payments when the contract is locked during the annuitization period. The dashboard displays only pertinent information relating to the user's investment including contract details, current interest rate offered, next payout amount & date, how much total payout is remaining, etc.  The user will find the app easy to use, have all information needed while only providing a few focused areas to engage the contract. This idea was an inspiration from a financial product called a period-certain annuity.
+This app is a proof of concept fixed-income product using js React, Redux & PostgresSQL. The MVP for this product will be as follows; the user will be able to customize their contract, expand their interest-bearing position at the buy-in period and receive fixed-income payments when the contract is locked during the annuitization period. The dashboard displays only pertinent information relating to the user's investment including contract details, current interest rate offered, next payout amount & date, how much total payout is remaining, etc.  The user will find the app easy to use, providing only a few focused areas to engage the contract. This project was an inspiration from a financial product called a period-certain annuity.
 
 ### Features
 User Login: Users will create an account and log in to the application. Each user will have a unique account page containing their contract.
@@ -15,7 +15,7 @@ Specify Contract Specs: User will be able to specify the name of the contract, t
 ### How to Run
 
 <ul>
-    <li>Run Postgresql & setup connection details in server/db/connect.js</li>
+    <li>Run PostgreSQL & setup connection details in server/db/connect.js</li>
     <li>Execute SQL scripts, server/scripts.sql</li>
     <li>cd server/</li>
     <li>yarn install</li>
@@ -55,12 +55,6 @@ nodemon@2.0.4
 
 ### Notes
 
-On Windows - fsevents
-
-Since fsevent is an optional dependency, the workaround is to run npm install with no-optional flag.
-
-npm install --no-optional
-
-*There are some crazy unresolved dependency issues between node-sass, node-gyp, node.js and python. This app will be refactored using sass in the future. The current workaround is to have the following versions of these dependencies installed...
-Node.js version 15.9.0, node-gyp -v 7.1.2, python 2.7 & python 3.9, and node-sass v4.14.1.
+*There are some unresolved dependency issues between node-sass, node-gyp, node.js and python. This app will be refactored using sass in the future. The current workaround is to have the following versions of these dependencies installed...
+Node.js version 15.9.0, node-gyp -v 7.1.2, python 3.9, and node-sass v4.14.1.
 

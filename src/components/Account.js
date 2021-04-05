@@ -1,10 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux'; //connects react component to redux state
+import { connect } from 'react-redux'; //connects react component to redux store
 import { Button } from 'react-bootstrap'; //import button
 import AccountForm from './AccountForm';
 import Summary from './Summary';
 import { history } from '../router/AppRouter';
-import Locked from './Locked';
+//import Locked from './Locked';
 
 class Account extends React.Component {
   constructor() {
@@ -68,8 +68,12 @@ class Account extends React.Component {
           </Button>
 
 
-          <button className={`${selectedType === 'locked' ? 'active account-btn' : 'account-btn'
+          <button 
+          variant="lock"
+          className={`${selectedType === 'locked' ? 'active account-btn' : 'account-btn'
               }`}
+          style={{backgroundColor:'red', color:'white'}}
+          color='red'
           onClick={() => {this.setSelectedType('locked'); history.push('/Locked')}}>
             Click to Lock in
           </button>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux'; //connects react component to redux state
+import { connect } from 'react-redux'; //connects react component to redux store
 import { Form, Button } from 'react-bootstrap'; //import button
 import AccountForm from './AccountForm';
 import Summary from './Summary';
@@ -23,11 +23,8 @@ class Locked extends React.Component {
   // setSelectedType = (selectedType) => { //sets selectedtype state depending on button onclick
   //   this.setState({ selectedType });
   // };
-
-
   render() {
     //const { selectedType } = this.state;
-
 
     return (
       <div className="locked-main">
