@@ -5,6 +5,7 @@ import { Form, Button } from 'react-bootstrap'; //import form and button
 import { initiateUpdateProfile } from '../actions/profile'; //update profile function
 import { validateFields } from '../utils/common';
 import { resetErrors } from '../actions/errors';
+import Header from './Header';
 
 const Profile = (props) => {
   const [state, setState] = useState({

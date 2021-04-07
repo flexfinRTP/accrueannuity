@@ -16,6 +16,10 @@ export const maintainSession = () => {
     if (currentPath === '/' || currentPath === '/register') { //is the landing the page or register page
       history.push('/profile'); //display profile info 
     }
+    // if (currentPath === 'locked') { //added 4.6
+    //   history.push('/locked');
+
+    // }
     const decoded = jwt_decode(user_token); //decode token
     updateStore(decoded); //update store with decoded password
   } else {

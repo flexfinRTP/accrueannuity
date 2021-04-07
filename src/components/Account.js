@@ -5,6 +5,7 @@ import AccountForm from './AccountForm';
 import Summary from './Summary';
 import { history } from '../router/AppRouter';
 //import Locked from './Locked';
+import Header from './Header';
 
 class Account extends React.Component {
   constructor() {

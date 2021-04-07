@@ -25,6 +25,7 @@ CREATE TABLE account(
     payout_amt VARCHAR(32) NOT NULL,
     userid INTEGER NOT NULL,
     total_balance BIGINT NOT NULL DEFAULT 0,
+    contract_balance BIGINT NOT NULL DEFAULT 0,
     FOREIGN KEY(userid) REFERENCES accrue_user(userid)
 );
 

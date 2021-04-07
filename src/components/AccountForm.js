@@ -80,7 +80,7 @@ class AccountForm extends React.Component {
         });
     };
 
-    handleOnSubmit = (event) => {
+    handleOnSubmit = (event) => { //onSubmit have deposit submit = withdraw from contract
         event.preventDefault();
         let { amount, account } = this.state;
 
@@ -96,7 +96,7 @@ class AccountForm extends React.Component {
                         : 'add_error']: 'Please enter an amount to withdraw.'
                 }
             });
-        } else { // dispatch objects when button is selected
+        } else { // dispatch objects when button is selected, have deposit submit = withdraw from contract
             let { total_balance } = account;
             amount = +amount;
             total_balance = +total_balance;
@@ -144,9 +144,12 @@ class AccountForm extends React.Component {
         const { editAccount, payout_amt, errorMsg, account } = this.state;
         const payout_freq = account.payout_freq;
         const type = selectedType.charAt(0).toUpperCase() + selectedType.slice(1); //renders only selectedType
+
         return payout_freq ? (
+
             editAccount ? (
                 <div className="edit-account-form  col-md-6 offset-md-3">
+
                     <h3>
                         Contract Details
                         <a
@@ -158,20 +161,24 @@ class AccountForm extends React.Component {
                         </a>
                     </h3>
                     <hr />
+
                     <Form>
                         {errorMsg && errorMsg.update_error && ( //display error
                             <p className="errorMsg">{errorMsg.update_error}</p>
                         )}
+
                         <Form.Group controlId="contract_name">
                             <Form.Label>Contract Name:</Form.Label>
                             <span className="label-value">
                                 {account && account.contract_name}
                             </span>
                         </Form.Group>
+
                         <Form.Group controlId="payout_freq">
                             <Form.Label>Payout Frequency:</Form.Label>
                             <span className="label-value">{account && payout_freq} minutes</span>
                         </Form.Group>
+
                         <Form.Group controlId="payout_amt">
                             <Form.Label>Payout Amount:</Form.Label>
                             <span className="label-value">${account && account.payout_amt}</span>
@@ -183,15 +190,18 @@ class AccountForm extends React.Component {
                                 onChange={this.handleInputChange}
                             />
                         </Form.Group>
+
                         <Button
                             variant="primary"
                             onClick={() => this.handleUpdateAccount(payout_amt)}
                         >
                             Update Contract
                         </Button>
+
                     </Form>
                 </div>
             ) : (
+
                 <div className="account-form col-md-6 offset-md-3">
                     {errorMsg && errorMsg.withdraw_error && (
                         <p className="errorMsg">{errorMsg.withdraw_error}</p>
@@ -199,6 +209,7 @@ class AccountForm extends React.Component {
                     {errorMsg && errorMsg.add_error && (
                         <p className="errorMsg">{errorMsg.add_error}</p>
                     )}
+
                     <Form onSubmit={this.handleOnSubmit} className="account-form">
                         <Form.Group controlId="type">
                             <Form.Label>{type}</Form.Label>
@@ -225,12 +236,14 @@ class AccountForm extends React.Component {
                                 {account && account.total_balance}
                             </span>
                         </Form.Group>
-                        {/* <Form.Group controlId="accnt_no">
+
+                        <Form.Group controlId="accnt_no">
                             <Form.Label>Contract Balance: $</Form.Label>
                             <span className="label-value">
-                                {account && account.total_balance}
+                                {account && account.contract_balance}
                             </span>
-                        </Form.Group> */}
+                        </Form.Group>
+
                         <Form.Group controlId="amount">
                             <Form.Label>Amount:</Form.Label>
                             <Form.Control

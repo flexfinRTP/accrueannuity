@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from 'react-redux'; //connects react component to redux store
-import Moment from 'moment';
+import moment from 'moment';
 import Summary from './Summary';
 import { account, payout_freq } from './Summary';
 //import logo from './logo.svg';
@@ -10,12 +10,13 @@ class CountdownTimer extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = { time: {}, seconds: 60 };
+        this.account = this.props.account //bring in account
+        this.payout_freq = this.account.payout_freq //payout freq
+
+        this.state = { time: {}, minutes: this.payout_freq }; 
         this.timer = 0;
         this.startTimer = this.startTimer.bind(this);
         this.countDown = this.countDown.bind(this);
-        
-        //this.payout_freq = this.props.payout_freq
 
     }
 
@@ -37,35 +38,38 @@ class CountdownTimer extends React.Component {
     }
 
     componentDidMount() {
-        const timeLeft = this.secondsToTime(this.state.seconds);
+        const timeLeft = this.secondsToTime(this.state.minutes);
         this.setState({ time: timeLeft });
     }
 
     startTimer() {
-        if (this.timer === 0 && this.state.seconds > 0) {
+        if (this.timer === 0 && this.state.minutes > 0) {
             this.timer = setInterval(this.countDown, 1000);
         }
     }
 
     countDown() {
         // Remove one second, set state so a re-render happens.
-        const seconds = this.state.seconds - 1;
+        const minutes = this.state.minutes - 1;
         this.setState({
-            time: this.secondsToTime(seconds),
-            seconds: seconds,
+            time: this.secondsToTime(minutes),
+            minutes: minutes,
         });
 
         // Check if we're at zero, than reset to user specified payout_freq
-        if (seconds === 0) {
+        if (minutes === 0) {
             //clearInterval(this.timer);
             this.setState({
-                time: this.secondsToTime(seconds),
-                seconds: 3600 //needs to be payout_freq not static #
+                time: this.secondsToTime(minutes),
+                minutes: this.payout_freq //needs to be payout_freq not static #
             })
         }
     }
 
     render() {
+        
+        //const payout_freq = account.payout_freq;
+
         return (
             <div>
                 {this.state.time.m} minutes {this.state.time.s} seconds
@@ -73,7 +77,6 @@ class CountdownTimer extends React.Component {
                 <button onClick={this.startTimer}>Start </button>
                 <br></br>
 
-                <p>{this.props.currTime}</p>
             </div>
         ); //onClick={this.startTimer}
     }

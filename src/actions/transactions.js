@@ -2,7 +2,8 @@ import { getErrors } from './errors';
 import {
   BASE_API_URL, 
   ADD_TRANSACTION,
-  SET_TRANSACTIONS
+  SET_TRANSACTIONS,
+  //TIMED_PAYMENT
  } from '../utils/constants';
 import { updateAccountBalance } from './account';
 import { get, post } from '../utils/api';
@@ -23,7 +24,7 @@ export const initiateDepositAmount = (account_id, amount) => {
       dispatch(
         addTransaction({
           ...transaction,
-          withdraw_amount: null
+          withdraw_amount: null //withdraw to contract_balance
         })
       );
       dispatch(updateAccountBalance(amount, 'deposit'));
@@ -44,7 +45,7 @@ export const initiateWithdrawAmount = (account_id, amount) => {
       dispatch(
         addTransaction({
           ...transaction,
-          deposit_amount: null
+          deposit_amount: null //deposit to total_balance
         })
       );
       dispatch(updateAccountBalance(amount, 'withdraw'));
@@ -54,7 +55,7 @@ export const initiateWithdrawAmount = (account_id, amount) => {
   };
 };
 
-export const setTransactions = (transactions) => ({
+export const setTransactions = (transactions) => ({ //use setTransactions to dispatch to Report
   type: SET_TRANSACTIONS,
   transactions
 });
@@ -75,3 +76,7 @@ export const initiateGetTransactions = (account_id, start_date, end_date) => {
     }
   };
 };
+
+export const timeUntilPayment = (payout_freq, amount) => ({ //timed payment action, takes in payout_freq and amount
+  //type: TIMED_PAYMENT,
+});

@@ -6,8 +6,10 @@ import Summary from './Summary';
 import { history } from '../router/AppRouter';
 import Account from './Account';
 import CountdownTimer from './CountdownTimer';
-import Timer from './Timer';
+import LockedHeader from './LockedHeader';
 
+
+//Locked should only display logout(LockedHeader) and Contract Summary, no withdraw or deposit functionality
 class Locked extends React.Component {
   constructor() {
     super();
@@ -23,11 +25,27 @@ class Locked extends React.Component {
   // setSelectedType = (selectedType) => { //sets selectedtype state depending on button onclick
   //   this.setState({ selectedType });
   // };
+
+  //   componentDidMount() {
+  //     const { Header } = this.props;
+  //     if (Header) {
+  //         this.props.dispatch(initiateGetAccntDetails()); //calls initiateGetAccntDetails
+  //     }
+  // }
+  // componentDidMount() {
+  //   if (window.location.pathname === '/Locked') return null;
+  // }
+
+
   render() {
     //const { selectedType } = this.state;
 
     return (
       <div className="locked-main">
+        <div>
+          <LockedHeader />
+        </div>
+
         <div>
           <button id="locked-btn" onClick={() => history.push('/Account')}>
             Click to Go Back

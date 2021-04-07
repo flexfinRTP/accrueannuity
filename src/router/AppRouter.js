@@ -15,7 +15,6 @@ import Account from '../components/Account';
 
 import Locked from '../components/Locked';
 
-
 export const history = createBrowserHistory();
 
 const AppRouter = ({ auth }) => {

@@ -11,6 +11,7 @@ export const UPDATE_ACCOUNT = 'UPDATE_ACCOUNT';
 export const RESET_ACCOUNT = 'RESET_ACCOUNT'; //clears acct info when different user logs in
 
 export const LOCKED_ACCOUNT = 'LOCKED_ACCOUNT';
+export const TIMED_PAYMENT = 'TIMED_PAYMENT';
 
 //constants to be used throughout app
 

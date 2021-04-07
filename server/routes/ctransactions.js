@@ -11,19 +11,19 @@ Router.post('/deposit/:id', authMiddleware, async (req, res) => {
     const { transaction_date, deposit_amount } = req.body;
     const account_id = req.params.id;
     const result = await client.query(
-      'select total_balance from account where account_id=$1',
+      'select contract_balance from account where account_id=$1',
       [account_id]
     );
 
-    const total_balance = +result.rows[0].total_balance;
-    const total = total_balance + deposit_amount;
+    const contract_balance = +result.rows[0].contract_balance;
+    const total = contract_balance + deposit_amount;
     
     await client.query(
       'insert into transactions(transaction_date, deposit_amount, account_id, balance) values($1,$2,$3,$4) returning *',
       [transaction_date, deposit_amount, account_id, total]
     );
     await client.query(
-      'update account set total_balance = total_balance + $1 where account_id=$2',
+      'update account set contract_balance = contract_balance + $1 where account_id=$2',
       [deposit_amount, account_id]
     );
     await client.query('commit');
@@ -45,19 +45,19 @@ Router.post('/withdraw/:id', authMiddleware, async (req, res) => {
     const { transaction_date, withdraw_amount } = req.body;
     const account_id = req.params.id;
     const result = await client.query(
-      'select total_balance from account where account_id=$1',
+      'select contract_balance from account where account_id=$1',
       [account_id]
     );
-    const total_balance = +result.rows[0].total_balance;
-    const total = total_balance - withdraw_amount;
+    const contract_balance = +result.rows[0].contract_balance;
+    const total = contract_balance - withdraw_amount;
 
-    if (withdraw_amount <= total_balance) { //checks withdraw updated total balance
+    if (withdraw_amount <= contract_balance) { //checks withdraw updated contract total balance
       await client.query(
         'insert into transactions(transaction_date, withdraw_amount, account_id, balance) values($1,$2,$3,$4) returning *',
         [transaction_date, withdraw_amount, account_id, total]
       );
       await client.query(
-        'update account set total_balance = total_balance - $1 where account_id=$2',
+        'update account set contract_balance = contract_balance - $1 where account_id=$2',
         [withdraw_amount, account_id]
       );
       await client.query('commit'); //pushes to table

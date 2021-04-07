@@ -24,14 +24,14 @@ class Summary extends React.Component {
     transactions: [],
     isDownloading: false,
     formSubmitted: false,
-    errorMsg: ''
+    errorMsg: '',
   }
 
   render() {
     //const { selectedType } = this.props;
 
     const { account } = this.props;
-    const { transactions } = this.state;
+    const { transactions } = this.props;
     //const type = selectedType.charAt(0).toUpperCase() + selectedType.slice(1);
 
     return (
@@ -43,18 +43,28 @@ class Summary extends React.Component {
               {account && account.contract_name}
             </span>
           </Form.Group>
+
           <Form.Group controlId="payout_freq">
             <Form.Label>Payout Frequency:</Form.Label>
             <span className="label-value">{account && account.payout_freq} minutes</span>
           </Form.Group>
+
           <Form.Group controlId="payout_amt">
             <Form.Label>Payout Amount:</Form.Label>
             <span className="label-value">${account && account.payout_amt}</span>
           </Form.Group>
+
           <Form.Group controlId="accnt_no">
             <Form.Label>Available Balance: $</Form.Label>
             <span className="label-value">
               {account && account.total_balance}
+            </span>
+          </Form.Group>
+
+          <Form.Group controlId="accnt_no">
+            <Form.Label>Contract Balance: $</Form.Label>
+            <span className="label-value">
+              {account && account.contract_balance}
             </span>
           </Form.Group>
         </div>
@@ -83,8 +93,12 @@ class Summary extends React.Component {
           </table>
         </div>
 
+        <p>{transactions.deposit_amount}</p>
+
         <div>
-          <Report transactions={transactions} />
+          <Report 
+          transactions={transactions} 
+          />
         </div>
 
         {/* <br></br><br></br> */}

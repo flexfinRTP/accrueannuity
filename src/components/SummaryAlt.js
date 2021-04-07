@@ -85,6 +85,7 @@ class SummaryAlt extends React.Component {
                             <p>Payout Frequency: {account.payout_freq} minute(s)</p>
                             <p>Payout Amount: ${account.payout_amt}</p>
                             <p>Total available balance: ${account.total_balance}</p>
+                            <p>Contract balance: ${account.contract_balance}</p>
                         </div>
                         <Report transactions={transactions} />
                     </React.Fragment>
