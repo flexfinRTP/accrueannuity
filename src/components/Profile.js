@@ -47,7 +47,7 @@ const Profile = (props) => {
   }, [props, props.errors]);
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault(); //prevents page from reloading when submitting event(form)
     const { first_name, last_name } = state;
     const profileData = {
       first_name,
@@ -68,7 +68,7 @@ const Profile = (props) => {
     }
   };
 
-  const handleOnChange = (event) => { //update value of name
+  const handleOnChange = (event) => { //update user defined value of name and email
     const { name, value } = event.target;
     setState({
       ...state,

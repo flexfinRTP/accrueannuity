@@ -45,7 +45,7 @@ Router.get('/account', authMiddleware, async (req, res) => {
     });
   }
 });
-//
+//posts payout_freq, contract_name, payout_amt, userid into database
 Router.post('/account', authMiddleware, async (req, res) => {
   const { payout_freq, contract_name, payout_amt } = req.body;
   try {
@@ -60,7 +60,7 @@ Router.post('/account', authMiddleware, async (req, res) => {
     });
   }
 });
-
+//updates payout_amt in database when it is edited in AccountForm component
 Router.patch('/account', authMiddleware, async (req, res) => {
   const { payout_amt } = req.body;
   try {

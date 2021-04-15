@@ -23,7 +23,6 @@ class AccountForm extends React.Component {
         editAccount: false,
         payout_amt: '',
         errorMsg: '',
-
         payout_freq: this.props.payout_freq
     };
 
@@ -66,22 +65,22 @@ class AccountForm extends React.Component {
     };
 
     handleAmountChange = (event) => {
-        this.setState({ amount: event.target.value });
+        this.setState({ amount: event.target.value }); //user defined amount, amount prop comes from here
     };
 
     handleEditAccount = (event) => {
-        event.preventDefault();
+        event.preventDefault(); //prevents page from reloading when submitting event(form)
         this.setState((prevState) => ({ editAccount: !prevState.editAccount }));
     };
 
     handleInputChange = (event) => {
         this.setState({
-            payout_amt: event.target.value
+            payout_amt: event.target.value //user defined payout amount, payout_amt comes from here
         });
     };
 
     handleOnSubmit = (event) => { //onSubmit have deposit submit = withdraw from contract
-        event.preventDefault();
+        // event.preventDefault(); //prevents page from reloading when submitting event(form)
         let { amount, account } = this.state;
 
         const { selectedType } = this.props;

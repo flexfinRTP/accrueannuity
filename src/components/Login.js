@@ -25,7 +25,7 @@ const Login = (props) => { //initialize login state empty
   }, [processOnMount]);
 
   const handleLogin = (event) => { //login using email, password
-    event.preventDefault();
+    event.preventDefault(); //prevents page from reloading when submitting event(form)
     const { email, password } = state;
     const fieldsToValidate = [{ email }, { password }];
 

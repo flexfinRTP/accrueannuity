@@ -4,6 +4,8 @@ const { getClient } = require('../db/connect');
 const Router = express.Router();
 const { getTransactions} = require('../utils/common');
 
+//contract_balance server transactions
+
 Router.post('/deposit/:id', authMiddleware, async (req, res) => {
   const client = await getClient();
   try {

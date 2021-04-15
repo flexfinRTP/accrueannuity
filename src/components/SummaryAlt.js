@@ -52,7 +52,7 @@ class SummaryAlt extends React.Component {
     };
 
     handleSubmit = (event) => {
-        event.preventDefault();
+        //event.preventDefault(); //prevents page from reloading when submitting event(form)
 
         this.setState({ formSubmitted: true });
         const { startDate, endDate } = this.state;

@@ -14,7 +14,7 @@ class Report extends React.Component {
     state = {
         account: this.props.account, //bring in account
 
-        transactions: this.props.transactions, //payout freq
+        transaction: this.props.transaction, //payout freq
 
         // formatted_date: transactions.formatted_date,
         // deposit_amount: this.transactions.deposit_amount,
@@ -43,7 +43,7 @@ class Report extends React.Component {
 
     render() {
         const { account } = this.props;
-        const { transactions } = this.props;
+        const { transaction } = this.props;
 
         return (
             <div>
@@ -62,7 +62,7 @@ class Report extends React.Component {
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>{transactions && transactions.formatted_date}</td>
+                                    <td>{transaction && transaction.formatted_date}</td>
                                     <td>{account.deposit_amount}</td>
                                     <td>{this.withdraw_amount}</td>
                                     <td>{this.total_balance}</td>
@@ -72,8 +72,8 @@ class Report extends React.Component {
                             </tbody>
                         </table>
                         <br></br>
-                        <p>{transactions}</p>
-                        <p>{this.props.transactions}</p>
+                        <p>{transaction}</p>
+                        <p>{this.props.transaction}</p>
                     </body>
                 </div>
             </div>

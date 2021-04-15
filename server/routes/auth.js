@@ -57,6 +57,7 @@ Router.post('/signup', async (req, res) => {
     });
   }
 });
+//login API
 //sign in Route, validate match, create token on login
 Router.post('/signin', async (req, res) => {
   try {
@@ -85,7 +86,7 @@ Router.post('/signin', async (req, res) => {
     });
   }
 });
-
+//LOGOUT API
 Router.post('/logout', authMiddleware, async (req, res) => {
   try {
     const { userid, access_token } = req.user; //makes sure token and userid is not in the database when logging out, else throw error

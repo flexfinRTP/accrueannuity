@@ -31,7 +31,7 @@ const Register = (props) => {
     event.preventDefault();
 
     const { first_name, last_name, email, password, cpassword } = state;
-    const fieldsToValidate = [
+    const fieldsToValidate = [ //checks user as inputed values into all fields
       { first_name },
       { last_name },
       { email },
@@ -40,12 +40,12 @@ const Register = (props) => {
     ];
 
     const allFieldsEntered = validateFields(fieldsToValidate);
-    if (!allFieldsEntered) {
+    if (!allFieldsEntered) { //if a field is empty, enter value into all firelds
       setErrorMsg({
         signup_error: 'Please enter all the fields.'
       });
     } else {
-      if (password !== cpassword) {
+      if (password !== cpassword) { //password and confirm must match when entering values
         setErrorMsg({
           signup_error: 'Password and confirm password does not match.'
         });
@@ -65,7 +65,7 @@ const Register = (props) => {
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setState({
+    setState({ //brings in state of all "field names" and sets value based on event.target.(value)
       ...state,
       [name]: value
     });

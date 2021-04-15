@@ -26,7 +26,7 @@ class AddAccountForm extends React.Component {
   };
 
   handleAddAccount = (event) => {
-    event.preventDefault();
+    event.preventDefault(); //prevents page from reloading when submitting event(form)
     const { payout_freq, contract_name, payout_amt } = this.state;
     const fieldsToValidate = [{ payout_freq }, { contract_name }, { payout_amt }];
 

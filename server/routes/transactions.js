@@ -4,24 +4,26 @@ const { getClient } = require('../db/connect');
 const Router = express.Router();
 const { getTransactions} = require('../utils/common');
 
+//deposit func into database tables
 Router.post('/deposit/:id', authMiddleware, async (req, res) => {
   const client = await getClient();
   try {
     await client.query('begin');
     const { transaction_date, deposit_amount } = req.body;
     const account_id = req.params.id;
-    const result = await client.query(
+    const result = await client.query( //posts total_balance to unique account id
       'select total_balance from account where account_id=$1',
       [account_id]
     );
 
     const total_balance = +result.rows[0].total_balance;
     const total = total_balance + deposit_amount;
-    
+    //posts updated transactions to transactions table, date, deposit amount, account id, balance
     await client.query(
       'insert into transactions(transaction_date, deposit_amount, account_id, balance) values($1,$2,$3,$4) returning *',
       [transaction_date, deposit_amount, account_id, total]
     );
+
     await client.query(
       'update account set total_balance = total_balance + $1 where account_id=$2',
       [deposit_amount, account_id]
@@ -37,7 +39,7 @@ Router.post('/deposit/:id', authMiddleware, async (req, res) => {
     client.release();
   }
 });
-
+//withdraw func into database tables
 Router.post('/withdraw/:id', authMiddleware, async (req, res) => {
   const client = await getClient();
   try {
@@ -76,7 +78,7 @@ Router.post('/withdraw/:id', authMiddleware, async (req, res) => {
     client.release();
   }
 });
-
+//fetch transactions table, start_date and end_date
 Router.get('/transactions/:id', authMiddleware, async (req, res) => {
   const { start_date, end_date } = req.query;
   try {
