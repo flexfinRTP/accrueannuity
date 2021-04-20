@@ -13,7 +13,7 @@ import { getTransactions } from '../utils/common';
 class Report extends React.Component {
     state = {
         account: this.props.account, //bring in account
-
+        transactions: this.props.transactions,
         transaction: this.props.transaction, //payout freq
 
         // formatted_date: transactions.formatted_date,
@@ -41,7 +41,7 @@ class Report extends React.Component {
 
     //trying to display data from transactions table
 
-    render() {
+    render(props) {
         const { account } = this.props;
         const { transaction } = this.props;
 
@@ -62,18 +62,15 @@ class Report extends React.Component {
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>{transaction && transaction.formatted_date}</td>
-                                    <td>{account.deposit_amount}</td>
-                                    <td>{this.withdraw_amount}</td>
-                                    <td>{this.total_balance}</td>
+                                    <td>{this.props.formatted_date}</td>
+                                    <td>{this.props.deposit_amount}</td>
+                                    <td>{this.props.withdraw_amount}</td>
+                                    <td>{this.props.total_balance}</td>
 
-                                    <td>{this.contract_balance}</td>
+                                    <td>{this.props.contract_balance}</td>
                                 </tr>
                             </tbody>
                         </table>
-                        <br></br>
-                        <p>{transaction}</p>
-                        <p>{this.props.transaction}</p>
                     </body>
                 </div>
             </div>

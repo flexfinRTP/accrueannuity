@@ -28,11 +28,11 @@ const accountReducer = (state = {}, action) => {
       //   };
       break;
     case TIMED_PAYMENT: //auto withdraw func based on amountToChange and payout_freq
-      if (action.operation === 'locked') {
+      if (action.operation === 'auto') {
         return {
           ...state,
-          total_balance: +state.total_balance + +action.amountToChange,
-          contract_balance: +state.contract_balance - +action.payout_amt && action.payout_freq
+          total_balance: +state.total_balance + +action.payout_amt && +action.payout_freq,
+          contract_balance: +state.contract_balance - +action.payout_amt && +action.payout_freq
         };
       }
       break;

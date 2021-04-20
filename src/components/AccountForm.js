@@ -69,7 +69,7 @@ class AccountForm extends React.Component {
     };
 
     handleEditAccount = (event) => {
-        event.preventDefault(); //prevents page from reloading when submitting event(form)
+        event.preventDefault(); //prevents page from reloading when submitting event(form) **Wont update balance when enable due to c_balance funconality
         this.setState((prevState) => ({ editAccount: !prevState.editAccount }));
     };
 
@@ -80,7 +80,7 @@ class AccountForm extends React.Component {
     };
 
     handleOnSubmit = (event) => { //onSubmit have deposit submit = withdraw from contract
-        // event.preventDefault(); //prevents page from reloading when submitting event(form)
+        event.preventDefault(); //prevents page from reloading when submitting event(form)
         let { amount, account } = this.state;
 
         const { selectedType } = this.props;
@@ -97,7 +97,10 @@ class AccountForm extends React.Component {
             });
         } else { // dispatch objects when button is selected, have deposit submit = withdraw from contract
             let { total_balance } = account;
+            let { contract_balance } = account;
+            
             amount = +amount;
+            contract_balance = +contract_balance;
             total_balance = +total_balance;
             if (selectedType === 'withdraw' && amount <= total_balance) { //withdraw conditional
                 this.props.dispatch(initiateWithdrawAmount(account.account_id, amount));
@@ -115,7 +118,7 @@ class AccountForm extends React.Component {
                     errorMsg: ''
                 });
             } else if (selectedType === 'locked') {
-                this.props.dispatch(account.account_id);
+                this.props.dispatch(account.account_id, amount);
                 this.setState({
                     errorMsg: ''
                 });
@@ -252,7 +255,8 @@ class AccountForm extends React.Component {
                                 value={this.state.amount}
                                 onChange={this.handleAmountChange}
                             />
-                        </Form.Group>
+                            </Form.Group>
+
                         <Button variant="primary" type="submit">
                             Submit
                         </Button>

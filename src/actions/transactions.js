@@ -18,7 +18,8 @@ export const initiateDepositAmount = (account_id, amount) => {
     try {
       const transaction = {
         transaction_date: new Date(),
-        deposit_amount: amount
+        deposit_amount: amount,
+        c_withdraw_amount: amount
       };
       await post(`${BASE_API_URL}/deposit/${account_id}`, transaction);
       dispatch(
@@ -40,7 +41,8 @@ export const initiateWithdrawAmount = (account_id, amount) => {
     try {
       const transaction = { //is pushed to database, check routes/transactions
         transaction_date: new Date(),
-        withdraw_amount: amount //withdraw from total_balance
+        withdraw_amount: amount, //withdraw from total_balance
+        c_deposit_amount: amount
       };
       await post(`${BASE_API_URL}/withdraw/${account_id}`, transaction);
       dispatch(

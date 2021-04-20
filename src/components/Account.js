@@ -11,9 +11,11 @@ class Account extends React.Component {
   constructor() {
     super();
     this.state = {
-      selectedType: 'withdraw', //default selectedType
+      selectedType: 'deposit', //default selectedType
     };
   }
+
+
 
   setSelectedType = (selectedType) => { //sets selectedtype state depending on button onclick
     this.setState({ selectedType });
@@ -45,24 +47,21 @@ class Account extends React.Component {
         <div className="account">
           <Button
             variant="primary"
-            className={`${selectedType === 'withdraw' ? 'active account-btn' : 'account-btn'
-              }`}
+            className={`${selectedType === 'withdraw' ? 'active account-btn' : 'account-btn'}`}
             onClick={() => this.setSelectedType('withdraw')}
           >
             Withdraw
           </Button>
           <Button
             variant="secondary"
-            className={`${selectedType === 'deposit' ? 'active account-btn' : 'account-btn'
-              }`}
+            className={`${selectedType === 'deposit' ? 'active account-btn' : 'account-btn'}`}
             onClick={() => this.setSelectedType('deposit')}
           >
             Deposit
           </Button>
           <Button
             variant="info"
-            className={`${selectedType === 'summary' ? 'active account-btn' : 'account-btn'
-              }`}
+            className={`${selectedType === 'summary' ? 'active account-btn' : 'account-btn'}`}
             onClick={() => this.setSelectedType('summary')}
           >
             Summary
@@ -71,18 +70,22 @@ class Account extends React.Component {
 
           <button 
           variant="lock"
-          className={`${selectedType === 'locked' ? 'active account-btn' : 'account-btn'
-              }`}
+          className={`${selectedType === 'auto' ? 'active account-btn' : 'account-btn'}`}
           style={{backgroundColor:'red', color:'white'}}
           color='red'
-          onClick={() => {this.setSelectedType('locked'); history.push('/Locked')}}>
+          path="/Locked"
+
+          onClick={() => 
+          {this.setSelectedType('auto'); 
+          history.push('/Locked')}}
+          >
             Click to Lock in
           </button>
 
 
         </div>
         <div>
-          {selectedType === 'withdraw' || selectedType === 'deposit' || selectedType === 'locked' ? ( //tells to display withdraw, deposit condit from AccountForm. if false display Summary
+          {selectedType === 'withdraw' || selectedType === 'deposit' || selectedType === 'auto' ? ( //tells to display withdraw, deposit condit from AccountForm. if false display Summary
             <AccountForm selectedType={selectedType} /> //displays selectedType only
           ) : (
             <Summary />

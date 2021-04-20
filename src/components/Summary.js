@@ -32,7 +32,13 @@ class Summary extends React.Component {
 
     const { account } = this.props;
     const { transactions } = this.props;
+    const { payout_freq } = this.props;
     //const type = selectedType.charAt(0).toUpperCase() + selectedType.slice(1);
+
+    //current date
+    const timeElasped = Date.now();
+    const today = new Date(timeElasped);
+    const today2 = today.toDateString();
 
     return (
       <div className="summary-main">
@@ -69,7 +75,13 @@ class Summary extends React.Component {
           </Form.Group>
         </div>
 
-        <br></br>
+        <br />
+        <div>
+          <p><strong>Today's Date is: {today2}</strong></p>
+          <h3>Time Until Next Payment:</h3>
+          <p>Countdown / goes here</p>
+        </div>
+        <br />
 
         <div>
           <h3>Time Until Next Payment:</h3>
@@ -93,18 +105,18 @@ class Summary extends React.Component {
           </table>
         </div>
 
-        <p>{transactions.deposit_amount}</p>
+        <p>{this.props.deposit_amount}</p>
 
         <div>
-          <Report 
-          transactions={transactions} 
+          <Report
+            transactions={transactions}
           />
         </div>
 
-        {/* <br></br><br></br> */}
+        <br></br><br></br>
 
         {/* <div>
-          <table>
+          <table id="transactions">
             <tr>
               <th>Date</th>
               <th>Deposit/Withdraw</th>
@@ -116,6 +128,7 @@ class Summary extends React.Component {
               <td>Deposit</td>
               <td>$100</td>
               <td>$100</td>
+              <td>{this.props.total_balance}</td>
             </tr>
           </table>
         </div> */}
