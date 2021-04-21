@@ -22,7 +22,7 @@ CREATE TABLE account(
     account_id BIGSERIAL PRIMARY KEY NOT NULL,
     payout_freq BIGINT NOT NULL,
     contract_name VARCHAR(50) NOT NULL,
-    payout_amt VARCHAR(32) NOT NULL,
+    payout_amt BIGINT NOT NULL,
     userid INTEGER NOT NULL,
     total_balance BIGINT NOT NULL DEFAULT 0,
     contract_balance BIGINT NOT NULL DEFAULT 0,

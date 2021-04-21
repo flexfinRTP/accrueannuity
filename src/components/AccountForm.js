@@ -9,7 +9,8 @@ import {
 } from '../actions/account';
 import {
     initiateWithdrawAmount,
-    initiateDepositAmount
+    initiateDepositAmount,
+    initiateTimedPayment
 } from '../actions/transactions';
 import { resetErrors } from '../actions/errors';
 import { validateFields } from '../utils/common';
@@ -23,7 +24,9 @@ class AccountForm extends React.Component {
         editAccount: false,
         payout_amt: '',
         errorMsg: '',
-        payout_freq: this.props.payout_freq
+        payout_freq: this.props.payout_freq,
+
+        selectedType: 'withdraw'
     };
 
     componentDidMount() {
@@ -81,7 +84,7 @@ class AccountForm extends React.Component {
 
     handleOnSubmit = (event) => { //onSubmit have deposit submit = withdraw from contract
         event.preventDefault(); //prevents page from reloading when submitting event(form)
-        let { amount, account } = this.state;
+        let { amount, account, payout_amt, payout_freq } = this.state;
 
         const { selectedType } = this.props;
         const fieldsToValidate = [{ amount }];
@@ -92,14 +95,17 @@ class AccountForm extends React.Component {
                 errorMsg: {
                     [selectedType === 'withdraw'
                         ? 'withdraw_error'
-                        : 'add_error']: 'Please enter an amount to withdraw.'
+                        : 'add_error']: 'Please enter an amount to exchange.'
                 }
             });
         } else { // dispatch objects when button is selected, have deposit submit = withdraw from contract
             let { total_balance } = account;
             let { contract_balance } = account;
-            
+
             amount = +amount;
+            payout_amt = +payout_amt;
+            payout_freq = +payout_freq;
+
             contract_balance = +contract_balance;
             total_balance = +total_balance;
             if (selectedType === 'withdraw' && amount <= total_balance) { //withdraw conditional
@@ -107,7 +113,7 @@ class AccountForm extends React.Component {
                 this.setState({
                     errorMsg: ''
                 });
-            } else if (selectedType === 'deposit') { //deposit conditional
+            } else if (selectedType === 'deposit' && amount <= contract_balance) { //deposit conditional //remove && for any input
                 this.props.dispatch(initiateDepositAmount(account.account_id, amount));
                 this.setState({
                     errorMsg: ''
@@ -117,22 +123,35 @@ class AccountForm extends React.Component {
                 this.setState({
                     errorMsg: ''
                 });
-            } else if (selectedType === 'locked') {
-                this.props.dispatch(account.account_id, amount);
+            } else if (selectedType === 'add') { //deposit conditional //remove && for any input
+                this.props.dispatch(initiateDepositAmount(account.account_id, amount));
                 this.setState({
-                    errorMsg: ''
+                    errorMsg: '',
+                    amount: 1000
                 });
+
+            // } 
+            //  else if (selectedType === 'auto') {
+            //     this.props.dispatch(initiateTimedPayment(account.account_id, payout_amt, payout_freq));
+            //     this.setState({
+            //         selectedType: 'auto',
+            //         errorMsg: ''
+            //     });
             } else {
                 this.setState({
                     errorMsg: {
                         [selectedType === 'withdraw'
                             ? 'withdraw_error'
-                            : 'add_error']: "Amount to withdraw cannot exceed available balance."
+                            : 'add_error']: "Error: Check Balances"
                     }
                 });
             }
         }
     };
+
+    setSelectedType = (selectedType) => { //sets selectedtype state depending on button onclick
+        this.setState({ selectedType });
+      };
 
     handleAddAccount = (account) => {
         const { payout_freq, contract_name, payout_amt } = account;
@@ -148,7 +167,7 @@ class AccountForm extends React.Component {
         const type = selectedType.charAt(0).toUpperCase() + selectedType.slice(1); //renders only selectedType
 
         return payout_freq ? (
-
+            //Pressing the Edit Contract Button
             editAccount ? (
                 <div className="edit-account-form  col-md-6 offset-md-3">
 
@@ -202,6 +221,7 @@ class AccountForm extends React.Component {
 
                     </Form>
                 </div>
+                //defualt display for /Account
             ) : (
 
                 <div className="account-form col-md-6 offset-md-3">
@@ -220,7 +240,7 @@ class AccountForm extends React.Component {
                                 className="edit-account"
                                 onClick={this.handleEditAccount}
                             >
-                                Edit Contract
+                                View/Edit Contract
                                 </a>
                         </Form.Group>
                         <hr />
@@ -245,9 +265,9 @@ class AccountForm extends React.Component {
                                 {account && account.contract_balance}
                             </span>
                         </Form.Group>
-
+                        <hr />
                         <Form.Group controlId="amount">
-                            <Form.Label>Amount:</Form.Label>
+                            <Form.Label>Exchange Amount: </Form.Label>
                             <Form.Control
                                 type="number"
                                 min="0"
@@ -255,10 +275,16 @@ class AccountForm extends React.Component {
                                 value={this.state.amount}
                                 onChange={this.handleAmountChange}
                             />
-                            </Form.Group>
-
-                        <Button variant="primary" type="submit">
+                        </Form.Group>
+                        <Button variant="primary"
+                            type="submit">
                             Submit
+                        </Button>
+                        <hr />
+                        <Button variant="info"
+                            type="add"
+                            onClick={() => this.setSelectedType('add')}>
+                            Add Funds
                         </Button>
                     </Form>
                 </div>

@@ -11,7 +11,7 @@ class Account extends React.Component {
   constructor() {
     super();
     this.state = {
-      selectedType: 'deposit', //default selectedType
+      selectedType: 'withdraw', //default selectedType
     };
   }
 
@@ -67,7 +67,6 @@ class Account extends React.Component {
             Summary
           </Button>
 
-
           <button 
           variant="lock"
           className={`${selectedType === 'auto' ? 'active account-btn' : 'account-btn'}`}
@@ -79,13 +78,13 @@ class Account extends React.Component {
           {this.setSelectedType('auto'); 
           history.push('/Locked')}}
           >
-            Click to Lock in
+            Lock
           </button>
 
 
         </div>
         <div>
-          {selectedType === 'withdraw' || selectedType === 'deposit' || selectedType === 'auto' ? ( //tells to display withdraw, deposit condit from AccountForm. if false display Summary
+          {selectedType === 'withdraw' || selectedType === 'deposit' || selectedType === 'add' || selectedType === 'auto' ? ( //tells to display withdraw, deposit condit from AccountForm. if false display Summary
             <AccountForm selectedType={selectedType} /> //displays selectedType only
           ) : (
             <Summary />

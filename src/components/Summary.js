@@ -9,9 +9,10 @@ import Report from './Report';
 import {
   initiateGetTransactions,
 } from '../actions/transactions';
-
+import { resetErrors } from '../actions/errors';
 
 class Summary extends React.Component {
+
   state = {
     account: this.props.account,
     //amount: '',
@@ -22,17 +23,74 @@ class Summary extends React.Component {
     startDate: new Date(),
     endDate: new Date(),
     transactions: [],
-    isDownloading: false,
-    formSubmitted: false,
+    formSubmitted: true,
     errorMsg: '',
+  };
+
+  getData() {
+    setTimeout(() => {
+      console.log('Our transactions are fetched');
+      this.setState({
+        transactions: this.props.transactions
+      })
+    }, 1000)
   }
+
+  componentDidMount() {
+    this.getData();
+    this.setState({
+      transactions: this.props.transactions
+    });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (!_.isEqual(prevProps.transactions, this.props.transactions)) {
+      this.setState({
+        transactions: this.props.transactions
+      });
+    }
+    if (!_.isEqual(prevProps.errors, this.props.errors)) {
+      this.setState({
+        errorMsg: this.props.errors
+      });
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.dispatch(resetErrors());
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+
+    this.setState({ formSubmitted: true });
+    const { startDate, endDate } = this.state;
+    const convertedStartDate = moment(startDate).format('YYYY-MM-DD');
+    const convertedEndDate = moment(endDate).format('YYYY-MM-DD');
+
+    const { account } = this.props;
+    this.props.dispatch(
+      initiateGetTransactions(
+        account.account_id,
+        convertedStartDate,
+        convertedEndDate
+      )
+    );
+  };
 
   render() {
     //const { selectedType } = this.props;
 
     const { account } = this.props;
-    const { transactions } = this.props;
+    // const { transactions } = this.props;
     const { payout_freq } = this.props;
+    const {
+      startDate,
+      endDate,
+      transactions,
+      formSubmitted,
+      errorMsg
+    } = this.state;
     //const type = selectedType.charAt(0).toUpperCase() + selectedType.slice(1);
 
     //current date
@@ -43,43 +101,45 @@ class Summary extends React.Component {
     return (
       <div className="summary-main">
         <div>
-          <Form.Group controlId="contract_name">
-            <Form.Label>Contract Name:</Form.Label>
-            <span className="label-value">
-              {account && account.contract_name}
-            </span>
-          </Form.Group>
 
-          <Form.Group controlId="payout_freq">
-            <Form.Label>Payout Frequency:</Form.Label>
-            <span className="label-value">{account && account.payout_freq} minutes</span>
-          </Form.Group>
+          <Form onSubmit={this.handleSubmit}>
 
-          <Form.Group controlId="payout_amt">
-            <Form.Label>Payout Amount:</Form.Label>
-            <span className="label-value">${account && account.payout_amt}</span>
-          </Form.Group>
+            <Form.Group controlId="contract_name">
+              <Form.Label>Contract Name:</Form.Label>
+              <span className="label-value">
+                {account && account.contract_name}
+              </span>
+            </Form.Group>
 
-          <Form.Group controlId="accnt_no">
-            <Form.Label>Available Balance: $</Form.Label>
-            <span className="label-value">
-              {account && account.total_balance}
-            </span>
-          </Form.Group>
+            <Form.Group controlId="payout_freq">
+              <Form.Label>Payout Frequency:</Form.Label>
+              <span className="label-value">{account && account.payout_freq} minutes</span>
+            </Form.Group>
 
-          <Form.Group controlId="accnt_no">
-            <Form.Label>Contract Balance: $</Form.Label>
-            <span className="label-value">
-              {account && account.contract_balance}
-            </span>
-          </Form.Group>
+            <Form.Group controlId="payout_amt">
+              <Form.Label>Payout Amount:</Form.Label>
+              <span className="label-value">${account && account.payout_amt}</span>
+            </Form.Group>
+
+            <Form.Group controlId="total_balance">
+              <Form.Label>Available Balance: $</Form.Label>
+              <span className="label-value">
+                {account && account.total_balance}
+              </span>
+            </Form.Group>
+
+            <Form.Group controlId="contract_balance">
+              <Form.Label>Contract Balance: $</Form.Label>
+              <span className="label-value">
+                {account && account.contract_balance}
+              </span>
+            </Form.Group>
+          </Form>
         </div>
 
         <br />
         <div>
           <p><strong>Today's Date is: {today2}</strong></p>
-          <h3>Time Until Next Payment:</h3>
-          <p>Countdown / goes here</p>
         </div>
         <br />
 
@@ -105,33 +165,45 @@ class Summary extends React.Component {
           </table>
         </div>
 
-        <p>{this.props.deposit_amount}</p>
+        <p>{this.state.transactions}</p>
 
-        <div>
-          <Report
-            transactions={transactions}
-          />
-        </div>
+        <Button type="submit"
+          className="btn-report"
+          transactions={transactions}
+        >
+          Transaction History
+        </Button>
+
+        <Report transactions={transactions} />
 
         <br></br><br></br>
 
-        {/* <div>
-          <table id="transactions">
-            <tr>
-              <th>Date</th>
-              <th>Deposit/Withdraw</th>
-              <th>Amount</th>
-              <th>Balance</th>
-            </tr>
-            <tr>
-              <td>01/01/2021</td>
-              <td>Deposit</td>
-              <td>$100</td>
-              <td>$100</td>
-              <td>{this.props.total_balance}</td>
-            </tr>
-          </table>
-        </div> */}
+        <div>
+          <body>
+            <br />
+            <table className="transactions">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Deposits</th>
+                  <th>Withdrawals</th>
+                  <th>Balance</th>
+                  <th>Contract Balance</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{this.state.formatted_date}</td>
+                  <td>{this.deposit_amount}</td>
+                  <td>{this.props.withdraw_amount}</td>
+                  <td>{this.props.total_balance}</td>
+
+                  <td>{this.props.contract_balance}</td>
+                </tr>
+              </tbody>
+            </table>
+          </body>
+        </div>
 
       </div>
     )

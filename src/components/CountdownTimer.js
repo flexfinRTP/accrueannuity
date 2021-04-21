@@ -69,6 +69,15 @@ class CountdownTimer extends React.Component {
         }
     }
 
+    // timeCont = (account_id, start_date, end_date) => {
+    //     start_date = moment(start_date).format('YYYY-MM-DD');
+    //     end_date = moment(end_date).format('YYYY-MM-DD');
+    //     this.setState({ errorMsg: '' });
+    //     this.props
+    //       .dispatch(timeCont(account_id, start_date, end_date))
+    //       .then(() => this.setState({}));
+    //   };
+
     render() {
         return (
             <div>

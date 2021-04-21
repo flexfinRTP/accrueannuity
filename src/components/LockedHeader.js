@@ -7,6 +7,12 @@ const LockedHeader = () => {
 
   //removes header AFTER page refresh, need to remove header onClick "locked" button
 
+  if (window.location.pathname === '/account') return null;
+
+//   handleHeader = () => {
+//     this.setState({  }); 
+// };
+
   return (
     <header>
       <div>

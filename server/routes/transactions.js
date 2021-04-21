@@ -15,7 +15,7 @@ Router.post('/deposit/:id', authMiddleware, async (req, res) => {
       'select total_balance from account where account_id=$1',
       [account_id]
     );
-
+      
     const total_balance = +result.rows[0].total_balance;
     const total = total_balance + deposit_amount;
     //posts updated transactions to transactions table, date, deposit amount, account id, balance
