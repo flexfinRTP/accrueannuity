@@ -5,7 +5,6 @@ import AccountForm from './AccountForm';
 import Summary from './Summary';
 import { history } from '../router/AppRouter';
 //import Locked from './Locked';
-import Header from './Header';
 
 class Account extends React.Component {
   constructor() {
@@ -50,14 +49,14 @@ class Account extends React.Component {
             className={`${selectedType === 'withdraw' ? 'active account-btn' : 'account-btn'}`}
             onClick={() => this.setSelectedType('withdraw')}
           >
-            Withdraw
+            Withdraw to Contract
           </Button>
           <Button
             variant="secondary"
             className={`${selectedType === 'deposit' ? 'active account-btn' : 'account-btn'}`}
             onClick={() => this.setSelectedType('deposit')}
           >
-            Deposit
+            Deposit to Account
           </Button>
           <Button
             variant="info"
@@ -78,16 +77,16 @@ class Account extends React.Component {
           {this.setSelectedType('auto'); 
           history.push('/Locked')}}
           >
-            Lock
+            Lock Contract
           </button>
 
 
         </div>
         <div>
           {selectedType === 'withdraw' || selectedType === 'deposit' || selectedType === 'add' || selectedType === 'auto' ? ( //tells to display withdraw, deposit condit from AccountForm. if false display Summary
-            <AccountForm selectedType={selectedType} /> //displays selectedType only
+            <AccountForm selectedType={selectedType} /> //displays selectedType
           ) : (
-            <Summary />
+            <Summary /> //or summary page
           )}
         </div>
       </div>

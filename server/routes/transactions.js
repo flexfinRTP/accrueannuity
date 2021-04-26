@@ -11,11 +11,19 @@ Router.post('/deposit/:id', authMiddleware, async (req, res) => {
     await client.query('begin');
     const { transaction_date, deposit_amount } = req.body;
     const account_id = req.params.id;
-    const result = await client.query( //posts total_balance to unique account id
+
+    const result = 
+    await client.query( //posts total_balance to unique account id
       'select total_balance from account where account_id=$1',
       [account_id]
     );
-      
+    await client.query( //posts contract_balance to unique account id
+      'select contract_balance from account where account_id=$1',
+      [account_id]
+    );
+    
+    const contract_balance = +result.rows[0].contract_balance;
+
     const total_balance = +result.rows[0].total_balance;
     const total = total_balance + deposit_amount;
     //posts updated transactions to transactions table, date, deposit amount, account id, balance
@@ -26,6 +34,10 @@ Router.post('/deposit/:id', authMiddleware, async (req, res) => {
 
     await client.query(
       'update account set total_balance = total_balance + $1 where account_id=$2',
+      [deposit_amount, account_id]
+    );
+    await client.query(
+      'update account set contract_balance = contract_balance - $1 where account_id=$2',
       [deposit_amount, account_id]
     );
     await client.query('commit');
@@ -46,20 +58,32 @@ Router.post('/withdraw/:id', authMiddleware, async (req, res) => {
     await client.query('begin'); //adds withdraw amt to table
     const { transaction_date, withdraw_amount } = req.body;
     const account_id = req.params.id;
+
     const result = await client.query(
       'select total_balance from account where account_id=$1',
       [account_id]
     );
+    await client.query(
+      'select contract_balance from account where account_id=$1',
+      [account_id]
+    );
+
+    const contract_balance = +result.rows[0].contract_balance;
+
     const total_balance = +result.rows[0].total_balance;
     const total = total_balance - withdraw_amount;
 
-    if (withdraw_amount <= total_balance) { //checks withdraw updated total balance
+    if (withdraw_amount <= total_balance) { //if available balance is greater than withdraw, then
       await client.query(
         'insert into transactions(transaction_date, withdraw_amount, account_id, balance) values($1,$2,$3,$4) returning *',
         [transaction_date, withdraw_amount, account_id, total]
       );
       await client.query(
         'update account set total_balance = total_balance - $1 where account_id=$2',
+        [withdraw_amount, account_id]
+      );
+      await client.query(
+        'update account set contract_balance = contract_balance + $1 where account_id=$2',
         [withdraw_amount, account_id]
       );
       await client.query('commit'); //pushes to table
@@ -80,9 +104,9 @@ Router.post('/withdraw/:id', authMiddleware, async (req, res) => {
 });
 //fetch transactions table, start_date and end_date
 Router.get('/transactions/:id', authMiddleware, async (req, res) => {
-  const { start_date, end_date } = req.query;
+  const { } = req.query;
   try {
-    const result = await getTransactions(req.params.id, start_date, end_date);
+    const result = await getTransactions(req.params.id);
     res.send(result.rows);
   } catch (error) {
     res.status(400).send({

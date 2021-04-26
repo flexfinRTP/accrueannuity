@@ -8,6 +8,7 @@ import { history } from '../router/AppRouter';
 import Account from './Account';
 // import CountdownTimer from './Countdown';
 import LockedHeader from './LockedHeader';
+import Header from './Header';
 import CountdownTimer from './CountdownTimer';
 import Report from './Report';
 
@@ -35,7 +36,7 @@ class Locked extends React.Component {
   //     }
   // }
   componentDidMount() {
-    if (window.location.pathname === '/Locked') 
+    if (window.location.pathname === '/Locked')
     return null;
   }
   componentDidUpdate() {
@@ -63,13 +64,15 @@ class Locked extends React.Component {
           <LockedHeader />
         </div>
 
-        <div>
+        {/* <div>
           <button id="locked-btn" 
           path="/account"
+          style={{backgroundColor:'red', color:'white'}}
+          color='red'
           onClick={() => history.push('/account')}>
             Click to Go Back
           </button>
-        </div>
+        </div> */}
 
         <br></br>
 

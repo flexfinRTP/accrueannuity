@@ -49,6 +49,7 @@ class Summary extends React.Component {
         transactions: [this.state.transactions]
     })
     });
+    
   }
 
   componentDidUpdate(prevProps) {
@@ -64,6 +65,12 @@ class Summary extends React.Component {
     }
   }
 
+  handleAutoPayment() {
+    const minutes = this.minutes;
+
+
+  }
+
   componentWillUnmount() {
     this.props.dispatch(resetErrors());
   }
@@ -72,16 +79,11 @@ class Summary extends React.Component {
     // event.preventDefault();
 
     this.setState({ formSubmitted: true });
-    const { startDate, endDate } = this.state;
-    const convertedStartDate = moment(startDate).format('YYYY-MM-DD');
-    const convertedEndDate = moment(endDate).format('YYYY-MM-DD');
 
     const { account } = this.props;
     this.props.dispatch(
       initiateGetTransactions(
         account.account_id,
-        convertedStartDate,
-        convertedEndDate
       ),
       initiateDepositAmount(),
       initiateWithdrawAmount()
@@ -100,7 +102,7 @@ class Summary extends React.Component {
       transactions,
       formSubmitted,
       errorMsg
-    } = this.props;
+    } = this.state;
     //const type = selectedType.charAt(0).toUpperCase() + selectedType.slice(1);
 
     //current date
@@ -123,12 +125,16 @@ class Summary extends React.Component {
 
             <Form.Group controlId="payout_freq">
               <Form.Label>Payout Frequency:</Form.Label>
-              <span className="label-value">{account && account.payout_freq} minutes</span>
+              <span className="label-value">
+                {account && account.payout_freq} seconds
+              </span>
             </Form.Group>
 
             <Form.Group controlId="payout_amt">
               <Form.Label>Payout Amount:</Form.Label>
-              <span className="label-value">${account && account.payout_amt}</span>
+              <span className="label-value">
+                ${account && account.payout_amt}
+              </span>
             </Form.Group>
 
             <Form.Group controlId="total_balance">
@@ -144,6 +150,13 @@ class Summary extends React.Component {
                 {account && account.contract_balance}
               </span>
             </Form.Group>
+
+            {/* <Form.Group controlId="contract_balance">
+              <Form.Label>Interest Payment: $</Form.Label>
+              <span className="label-value">
+                {}
+              </span>
+            </Form.Group> */}
           </Form>
         </div>
 
@@ -161,10 +174,11 @@ class Summary extends React.Component {
             seconds={account.payout_freq}
             payout_amt={account.payout_amt}
             contract_balance={account.contract_balance}
-            total_balance={account.total_balances}
+            total_balance={account.total_balance}
           />
         </div>
 
+        <hr />
         <br></br>
 
         <div className="interest-rate">

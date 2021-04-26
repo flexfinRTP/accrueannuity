@@ -21,11 +21,15 @@ const accountReducer = (state = {}, action) => {
           contract_balance: +state.contract_balance - +action.amountToChange
         };
 
-      } else if (action.operation === 'add') {
+
+      } else if (action.operation === 'auto') {
         return {
           ...state,
-          total_balance: +state.total_balance + 1000,
+          total_balance: +state.total_balance + +action.amountToChange,
+          contract_balance: +state.contract_balance - +action.amountToChange,
+          interest_rate: .05
         };
+
       }
       // } else if (action.operation === 'locked') { //action of update acct statae with action func updateAccountBalance
       //   return {
@@ -38,7 +42,8 @@ const accountReducer = (state = {}, action) => {
         return {
           ...state,
           total_balance: +state.total_balance + +action.payout_amt && +action.payout_freq,
-          contract_balance: +state.contract_balance - +action.payout_amt && +action.payout_freq
+          contract_balance: +state.contract_balance - +action.payout_amt && +action.payout_freq,
+          interest_rate: .05
         };
       }
       break;

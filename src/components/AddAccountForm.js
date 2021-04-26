@@ -69,7 +69,7 @@ class AddAccountForm extends React.Component {
             <Form.Control
               type="text"
               name="payout_freq"
-              placeholder="Enter Desired Payout Frequency in Minutes"
+              placeholder="Enter Desired Payout Frequency in Seconds"
               value={payout_freq}
               onChange={this.handleInputChange}
             />

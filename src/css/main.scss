@@ -22,14 +22,16 @@ body {
 
 .errorMsg {
   color: #f21e08;
+  text-align: center;
   padding: 0.5rem;
   padding-left: 0;
   max-width: 450px;
 }
 
 .successMsg {
-  color: #00ff00;
-  background: #077707;
+  color: #ffffff;
+  background: #ff0000;
+  text-align: center;
   padding: 0.5rem;
 }
 

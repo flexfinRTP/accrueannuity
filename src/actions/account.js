@@ -12,12 +12,10 @@ export const resetAccount = () => ({ //clears account when resetAccount event tr
   type: RESET_ACCOUNT
 });
 
-export const updateAccountBalance = (amountToChange, operation, payout_freq, payout_amt) => ({ //
+export const updateAccountBalance = (amountToChange, operation) => ({ //
   type: UPDATE_ACCOUNT,
   amountToChange,
   operation,  
-  payout_freq, //TIMED_PAYMENT, pay account based on payout frequency, user defined
-  payout_amt //TIMED_PAYMENT, pay account based on payout amount, user defined
 });
 
 export const initiateGetAccntDetails = () => {

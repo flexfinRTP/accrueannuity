@@ -59,24 +59,23 @@ export const initiateWithdrawAmount = (account_id, amount) => {
   };
 };
 
-export const initiateTimedPayment = (account_id, payout_amt, payout_freq) => { //auto/timed payment action, takes in payout_freq and user defined payout_amount
+export const initiateTimedPayment = (account_id, payout_amt) => { //auto/timed payment action, takes in payout_freq and user defined payout_amount
   return async (dispatch) => {
     try {
       const transaction = { //is pushed to database, check routes/transactions
         transaction_date: new Date(),
-        payout_freq: payout_freq, //payouts from contract_balance into total_balance at user defined frequency
-        payout_amt: payout_amt //deposit to total_balance depending on user defined amount
+        deposit_amount: payout_amt, //payouts from contract_balance into total_balance at user defined frequency
+        c_withdraw_amount: payout_amt //deposit to total_balance depending on user defined amount
       };
-      await post(`${BASE_API_URL}/locked/${account_id}`, transaction);
+      await post(`${BASE_API_URL}/summary/${account_id}`, transaction);
       dispatch(
         addTransaction({
           ...transaction,
           withdraw_amount: null, //withdraw from total_balance is null
-          // c_withdraw_amount: payout_amt, //timed withdraw from contract_balance is user defined payout_amt
-          // c_withdraw_freq: payout_freq //timed withdraw from contract_balance is user defined payout_freq
+          c_withdraw_amount: payout_amt, //timed withdraw from contract_balance is user defined payout_amt
         })
       );
-      dispatch(updateAccountBalance(payout_amt, 'auto', payout_freq));
+      dispatch(updateAccountBalance(payout_amt, 'auto'));
     } catch (error) {
       error.response && dispatch(getErrors(error.response.data)); //displays errors if any
     }
@@ -88,15 +87,12 @@ export const setTransactions = (transactions) => ({ //use setTransactions to dis
   transactions
 });
 
-export const initiateGetTransactions = (account_id, start_date, end_date) => {
+export const initiateGetTransactions = (account_id) => {
   return async (dispatch) => {
     try {
       let query;
-      if (start_date && end_date) {
-        query = `${BASE_API_URL}/transactions/${account_id}?start_date=${start_date}&end_date=${end_date}`;
-      } else {
         query = `${BASE_API_URL}/transactions/${account_id}`;
-      }
+
       const profile = await get(query);
       dispatch(setTransactions(profile.data));
     } catch (error) {

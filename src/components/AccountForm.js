@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; //uses link to specify a specific path by using Link to (use exact to only display that path)
 import { Form, Button } from 'react-bootstrap'; //import form and button
 import { connect } from 'react-redux'; //connects react component to redux store
 import _ from 'lodash';
@@ -101,10 +102,12 @@ class AccountForm extends React.Component {
         } else { // dispatch objects when button is selected, have deposit submit = withdraw from contract
             let { total_balance } = account;
             let { contract_balance } = account;
+            let { interest_rate } = account;
 
             amount = +amount;
             payout_amt = +payout_amt;
             payout_freq = +payout_freq;
+            interest_rate = +0.05; //interest rate @ 5%
 
             contract_balance = +contract_balance;
             total_balance = +total_balance;
@@ -113,30 +116,31 @@ class AccountForm extends React.Component {
                 this.setState({
                     errorMsg: ''
                 });
-            } else if (selectedType === 'deposit'  && amount <= contract_balance) { //deposit conditional //remove && for any input
+            } else if (selectedType === 'deposit' && amount <= contract_balance) { //deposit conditional //remove && for any input
                 this.props.dispatch(initiateDepositAmount(account.account_id, amount));
                 this.setState({
                     errorMsg: ''
                 });
             } else if (selectedType === 'summary') {
-                this.props.dispatch(account.account_id, amount);
+                this.props.dispatch(initiateTimedPayment(account.account_id, amount));
                 this.setState({
+                    amount: {payout_amt},
                     errorMsg: ''
                 });
-            } else if (selectedType === 'add') { //deposit conditional //remove && for any input
-                this.props.dispatch(initiateDepositAmount(account.account_id, amount = 1000));
+            } else if (selectedType === 'auto' && this.minutes === 0) { //auto payment at end of countdown
+                this.props.dispatch(initiateTimedPayment(account.account_id, amount));
                 this.setState({
-                    errorMsg: '',
-                    amount: 1000
+                    amount: {payout_amt}, //amount to initiateTimedPayment = user-defined payout_amt + interest rate
+                    errorMsg: ''
                 });
 
-            // } 
-            //  else if (selectedType === 'auto') {
-            //     this.props.dispatch(initiateTimedPayment(account.account_id, payout_amt, payout_freq));
-            //     this.setState({
-            //         selectedType: 'auto',
-            //         errorMsg: ''
-            //     });
+                // } 
+                //  else if (selectedType === 'auto') {
+                //     this.props.dispatch(initiateTimedPayment(account.account_id, payout_amt, payout_freq));
+                //     this.setState({
+                //         selectedType: 'auto',
+                //         errorMsg: ''
+                //     });
             } else {
                 this.setState({
                     errorMsg: {
@@ -151,7 +155,7 @@ class AccountForm extends React.Component {
 
     setSelectedType = (selectedType) => { //sets selectedtype state depending on button onclick
         this.setState({ selectedType });
-      };
+    };
 
     handleAddAccount = (account) => {
         const { payout_freq, contract_name, payout_amt } = account;
@@ -170,7 +174,6 @@ class AccountForm extends React.Component {
             //Pressing the Edit Contract Button
             editAccount ? (
                 <div className="edit-account-form  col-md-6 offset-md-3">
-
                     <h3>
                         Contract Details
                         <a
@@ -197,7 +200,7 @@ class AccountForm extends React.Component {
 
                         <Form.Group controlId="payout_freq">
                             <Form.Label>Payout Frequency:</Form.Label>
-                            <span className="label-value">{account && payout_freq} minutes</span>
+                            <span className="label-value">{account && payout_freq} seconds</span>
                         </Form.Group>
 
                         <Form.Group controlId="payout_amt">
@@ -280,12 +283,12 @@ class AccountForm extends React.Component {
                             type="submit">
                             Submit
                         </Button>
-                        <hr />
-                        <Button variant="info"
+                        {/* <hr /> */}
+                        {/* <Button variant="info"
                             type="add"
                             onClick={() => this.setSelectedType('add')}>
                             Add Funds
-                        </Button>
+                        </Button> */}
                     </Form>
                 </div>
             )
