@@ -8,8 +8,11 @@ import CountdownTimer from './CountdownTimer';
 import Report from './Report';
 import {
   initiateGetTransactions,
+  initiateWithdrawAmount,
+  initiateDepositAmount,
 } from '../actions/transactions';
 import { resetErrors } from '../actions/errors';
+
 
 class Summary extends React.Component {
 
@@ -29,17 +32,22 @@ class Summary extends React.Component {
 
   getData() {
     setTimeout(() => {
-      console.log('Our transactions are fetched');
+      console.log('Transactions are fetched');
       this.setState({
-        transactions: this.props.transactions
+        transactions: this.state.transactions
       })
     }, 1000)
   }
 
   componentDidMount() {
     this.getData();
-    this.setState({
-      transactions: this.props.transactions
+    fetch(initiateGetTransactions())
+    fetch(initiateDepositAmount())
+    fetch(initiateWithdrawAmount())
+    .then(transactions => {
+      this.setState({
+        transactions: [this.state.transactions]
+    })
     });
   }
 
@@ -61,7 +69,7 @@ class Summary extends React.Component {
   }
 
   handleSubmit = (event) => {
-    event.preventDefault();
+    // event.preventDefault();
 
     this.setState({ formSubmitted: true });
     const { startDate, endDate } = this.state;
@@ -74,8 +82,10 @@ class Summary extends React.Component {
         account.account_id,
         convertedStartDate,
         convertedEndDate
-      )
-    );
+      ),
+      initiateDepositAmount(),
+      initiateWithdrawAmount()
+    )
   };
 
   render() {
@@ -90,7 +100,7 @@ class Summary extends React.Component {
       transactions,
       formSubmitted,
       errorMsg
-    } = this.state;
+    } = this.props;
     //const type = selectedType.charAt(0).toUpperCase() + selectedType.slice(1);
 
     //current date
@@ -149,6 +159,9 @@ class Summary extends React.Component {
             currTime={this.payout_freq}
             state={account.payout_freq} //pass payout_freq as the current state of countdownTimer
             seconds={account.payout_freq}
+            payout_amt={account.payout_amt}
+            contract_balance={account.contract_balance}
+            total_balance={account.total_balances}
           />
         </div>
 
@@ -156,25 +169,40 @@ class Summary extends React.Component {
 
         <div className="interest-rate">
           <table>
-            <tr>
-              <th>Interest Rate:</th>
-            </tr>
-            <tr>
-              <td>5%</td>
-            </tr>
+            <tbody>
+              <tr>
+                <th>Interest Rate:</th>
+              </tr>
+              <tr>
+                <td>5%</td>
+              </tr>
+            </tbody>
           </table>
         </div>
+
+        <ul>
+          {this.state.transactions.map((transaction) => (
+            <li key={transaction.id}>{transaction.total_balance}</li>
+          ))}
+        </ul>
 
         <p>{this.state.transactions}</p>
 
         <Button type="submit"
           className="btn-report"
           transactions={transactions}
+          onClick={this.handleSubmit}
         >
           Transaction History
         </Button>
 
-        <Report transactions={transactions} />
+
+        {/* {this.state.transactions.map((transaction, index) => (
+          <div><p key={index}>{transaction.deposit_amount} from {transactions.total_balance}</p></div>
+        ))} */}
+
+
+        <Report transactions={this.transactions} />
 
         <br></br><br></br>
 
@@ -193,8 +221,8 @@ class Summary extends React.Component {
               </thead>
               <tbody>
                 <tr>
-                  <td>{this.state.formatted_date}</td>
-                  <td>{this.deposit_amount}</td>
+                  <td>{this.state.transactions.formatted_date}</td>
+                  <td>{this.props.deposit_amount}</td>
                   <td>{this.props.withdraw_amount}</td>
                   <td>{this.props.total_balance}</td>
 

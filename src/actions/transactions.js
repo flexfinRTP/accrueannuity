@@ -76,7 +76,7 @@ export const initiateTimedPayment = (account_id, payout_amt, payout_freq) => { /
           // c_withdraw_freq: payout_freq //timed withdraw from contract_balance is user defined payout_freq
         })
       );
-      dispatch(updateAccountBalance(payout_amt, 'locked', payout_freq));
+      dispatch(updateAccountBalance(payout_amt, 'auto', payout_freq));
     } catch (error) {
       error.response && dispatch(getErrors(error.response.data)); //displays errors if any
     }

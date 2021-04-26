@@ -18,7 +18,7 @@ Router.post('/deposit/:id', authMiddleware, async (req, res) => {
     );
 
     const contract_balance = +result.rows[0].contract_balance;
-    const total = contract_balance + deposit_amount;
+    const total = contract_balance - deposit_amount;
     
     await client.query(
       'insert into transactions(transaction_date, deposit_amount, account_id, balance) values($1,$2,$3,$4) returning *',
@@ -51,7 +51,7 @@ Router.post('/withdraw/:id', authMiddleware, async (req, res) => {
       [account_id]
     );
     const contract_balance = +result.rows[0].contract_balance;
-    const total = contract_balance - withdraw_amount;
+    const total = contract_balance + withdraw_amount;
 
     if (withdraw_amount <= contract_balance) { //checks withdraw updated contract total balance
       await client.query(

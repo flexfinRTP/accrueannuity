@@ -24,7 +24,7 @@ const accountReducer = (state = {}, action) => {
       } else if (action.operation === 'add') {
         return {
           ...state,
-          total_balance: +state.total_balance + +action.amountToChange,
+          total_balance: +state.total_balance + 1000,
         };
       }
       // } else if (action.operation === 'locked') { //action of update acct statae with action func updateAccountBalance

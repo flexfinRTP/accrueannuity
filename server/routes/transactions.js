@@ -35,7 +35,7 @@ Router.post('/deposit/:id', authMiddleware, async (req, res) => {
     res.status(400).send({
       add_error: 'Error while depositing amount..Try again later.'
     });
-  } finally {
+  } finally { 
     client.release();
   }
 });

@@ -36,9 +36,19 @@ class CountdownTimer extends React.Component {
         return obj;
     }
 
+    autoPayout() {
+        
+        if (this.minutes === 0) {
+            this.setState ({
+            total_balance: this.total_balance + 10,
+            contract_balance: this.contract_balance - 10
+        })
+        }
+    }
+
     componentDidMount() {
         const timeLeft = this.secondsToTime(this.state.minutes);
-        this.setState({ time: timeLeft });
+        this.setState({ time: timeLeft, contract_balance: this.state.contract_balance, total_balance: this.state.total_balance });
         this.startTimer(); //runs timer when page is loaded
     }
 
@@ -63,8 +73,9 @@ class CountdownTimer extends React.Component {
                 time: this.secondsToTime(minutes),
                 minutes: this.payout_freq, //needs to be payout_freq not static #
                 ...state,
-                // total_balance: (+state.total_balance + +{payout_amt}),
-                // contract_balance: (+state.contract_balance - +{payout_amt})
+                payout_amt: this.payout_amt,
+                total_balance: (this.total_balance + 10), //{payout_amt}
+                contract_balance: (this.contract_balance - {payout_amt})
             })
         }
     }
@@ -84,6 +95,7 @@ class CountdownTimer extends React.Component {
                 {this.state.time.m} minutes {this.state.time.s} seconds
                 <br></br>
                 {/* <button onClick={this.startTimer}>Start </button> */}
+                {this.total_balance} {this.contract_balance}
                 <br></br>
 
             </div>

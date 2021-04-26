@@ -38,6 +38,10 @@ class Locked extends React.Component {
     if (window.location.pathname === '/Locked') 
     return null;
   }
+  componentDidUpdate() {
+    if (window.location.pathname === '/Locked') 
+    return null;
+  }
 
 
   render() {
@@ -109,8 +113,7 @@ class Locked extends React.Component {
         <br />
         <div>
           <p><strong>Today's Date is: {today2}</strong></p>
-          <h3>Time Until Next Payment:</h3>
-          <p>Countdown / goes here</p>
+
         </div>
         <br />
 

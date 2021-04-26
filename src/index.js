@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //import 'react-bootstrap-table/dist/react-bootstrap-table-all.min.css'; 
 import './css/main.scss'; 
 import { maintainSession } from './utils/common';
+// export const ThemeContext = React.createContext([{}, () => {}]);
 
 maintainSession();
 const rootElement = document.getElementById('root'); //tells where to render and what styling
@@ -19,3 +20,4 @@ ReactDOM.render(
   rootElement
 );
 //render store and main 'app' component AppRouter
+// export default ThemeContext;

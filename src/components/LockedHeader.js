@@ -9,15 +9,16 @@ const LockedHeader = () => {
 
   if (window.location.pathname === '/account') return null;
 
-//   handleHeader = () => {
-//     this.setState({  }); 
-// };
+  //   handleHeader = () => {
+  //     this.setState({  }); 
+  // };
 
   return (
     <header>
       <div>
         <img src={process.env.PUBLIC_URL + '/logo.png'} alt="" />
       </div>
+
       <div className="links">
         <Link to="/logout" className="link">
           Logout

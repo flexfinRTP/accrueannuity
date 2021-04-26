@@ -113,7 +113,7 @@ class AccountForm extends React.Component {
                 this.setState({
                     errorMsg: ''
                 });
-            } else if (selectedType === 'deposit' && amount <= contract_balance) { //deposit conditional //remove && for any input
+            } else if (selectedType === 'deposit'  && amount <= contract_balance) { //deposit conditional //remove && for any input
                 this.props.dispatch(initiateDepositAmount(account.account_id, amount));
                 this.setState({
                     errorMsg: ''
@@ -124,7 +124,7 @@ class AccountForm extends React.Component {
                     errorMsg: ''
                 });
             } else if (selectedType === 'add') { //deposit conditional //remove && for any input
-                this.props.dispatch(initiateDepositAmount(account.account_id, amount));
+                this.props.dispatch(initiateDepositAmount(account.account_id, amount = 1000));
                 this.setState({
                     errorMsg: '',
                     amount: 1000
