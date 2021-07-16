@@ -36,12 +36,17 @@ class Locked extends React.Component {
   //     }
   // }
   componentDidMount() {
+
     if (window.location.pathname === '/Locked')
-    return null;
+      return null;
   }
   componentDidUpdate() {
-    if (window.location.pathname === '/Locked') 
-    return null;
+    if (window.location.pathname === '/Locked')
+      return null;
+  }
+
+  handleAutoPayment() {
+
   }
 
 
@@ -80,57 +85,57 @@ class Locked extends React.Component {
           <p id="contract-locked">Your Contract is Locked!</p>
         </div>
         <div className="summary-main">
-        <div>
-          <Form.Group controlId="contract_name">
-            <Form.Label>Contract Name:</Form.Label>
-            <span className="label-value">
-              {account && account.contract_name}
-            </span>
-          </Form.Group>
+          <div>
+            <Form.Group controlId="contract_name">
+              <Form.Label>Contract Name:</Form.Label>
+              <span className="label-value">
+                {account && account.contract_name}
+              </span>
+            </Form.Group>
 
-          <Form.Group controlId="payout_freq">
-            <Form.Label>Payout Frequency:</Form.Label>
-            <span className="label-value">{account && account.payout_freq} minutes</span>
-          </Form.Group>
+            <Form.Group controlId="payout_freq">
+              <Form.Label>Payout Frequency:</Form.Label>
+              <span className="label-value">{account && account.payout_freq} seconds</span>
+            </Form.Group>
 
-          <Form.Group controlId="payout_amt">
-            <Form.Label>Payout Amount:</Form.Label>
-            <span className="label-value">${account && account.payout_amt}</span>
-          </Form.Group>
+            <Form.Group controlId="payout_amt">
+              <Form.Label>Payout Amount:</Form.Label>
+              <span className="label-value">${account && account.payout_amt}</span>
+            </Form.Group>
 
-          <Form.Group controlId="accnt_no">
-            <Form.Label>Available Balance: $</Form.Label>
-            <span className="label-value">
-              {account && account.total_balance}
-            </span>
-          </Form.Group>
+            <Form.Group controlId="accnt_no">
+              <Form.Label>Available Balance: $</Form.Label>
+              <span className="label-value">
+                {account && account.total_balance}
+              </span>
+            </Form.Group>
 
-          <Form.Group controlId="accnt_no">
-            <Form.Label>Contract Balance: $</Form.Label>
-            <span className="label-value">
-              {account && account.contract_balance}
-            </span>
-          </Form.Group>
-        </div>
+            <Form.Group controlId="accnt_no">
+              <Form.Label>Contract Balance: $</Form.Label>
+              <span className="label-value">
+                {account && account.contract_balance}
+              </span>
+            </Form.Group>
+          </div>
 
-        <br />
-        <div>
-          <p><strong>Today's Date is: {today2}</strong></p>
+          <br />
+          <div>
+            <p><strong>Today's Date is: {today2}</strong></p>
 
-        </div>
-        <br />
+          </div>
+          <br />
 
-        <div>
-          <h3>Time Until Next Payment:</h3>
-          <CountdownTimer
-            currTime={this.payout_freq}
-            state={account.payout_freq} //pass payout_freq as the current state of countdownTimer
-            seconds={account.payout_freq}
-          />
-        </div>
+          <div>
+            <h3>Time Until Next Payment:</h3>
+            <CountdownTimer
+              currTime={this.payout_freq}
+              state={account.payout_freq} //pass payout_freq as the current state of countdownTimer
+              seconds={account.payout_freq}
+            />
+          </div>
 
-        <br></br>
-
+          <br></br>
+          {/* 
         <div className="interest-rate">
           <table>
             <tr>
@@ -146,9 +151,9 @@ class Locked extends React.Component {
             transactions={transactions}
           />
         </div>
-        </div>
+        </div> */}
 
-      </div>
+        </div>
       </div>
     );
   }

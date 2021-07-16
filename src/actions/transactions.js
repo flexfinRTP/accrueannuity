@@ -5,7 +5,7 @@ import {
   SET_TRANSACTIONS,
   // TIMED_PAYMENT
 } from '../utils/constants';
-import { updateAccountBalance } from './account';
+import { timedPayment, updateAccountBalance } from './account';
 import { get, post } from '../utils/api';
 
 export const addTransaction = (transaction) => ({
@@ -67,7 +67,7 @@ export const initiateTimedPayment = (account_id, payout_amt) => { //auto/timed p
         deposit_amount: payout_amt, //payouts from contract_balance into total_balance at user defined frequency
         c_withdraw_amount: payout_amt //deposit to total_balance depending on user defined amount
       };
-      await post(`${BASE_API_URL}/summary/${account_id}`, transaction);
+      await post(`${BASE_API_URL}/deposit/${account_id}`, transaction);
       dispatch(
         addTransaction({
           ...transaction,
@@ -75,7 +75,7 @@ export const initiateTimedPayment = (account_id, payout_amt) => { //auto/timed p
           c_withdraw_amount: payout_amt, //timed withdraw from contract_balance is user defined payout_amt
         })
       );
-      dispatch(updateAccountBalance(payout_amt, 'auto'));
+      dispatch(timedPayment(payout_amt, 'auto'));
     } catch (error) {
       error.response && dispatch(getErrors(error.response.data)); //displays errors if any
     }

@@ -1,4 +1,4 @@
-import { BASE_API_URL } from '../utils/constants';
+import { BASE_API_URL, TIMED_PAYMENT } from '../utils/constants';
 import { getErrors } from './errors';
 import { SET_ACCOUNT, UPDATE_ACCOUNT, RESET_ACCOUNT } from '../utils/constants';
 import { get, patch, post } from '../utils/api';
@@ -16,6 +16,11 @@ export const updateAccountBalance = (amountToChange, operation) => ({ //
   type: UPDATE_ACCOUNT,
   amountToChange,
   operation,  
+});
+
+export const timedPayment = (amountToChange, operation) => ({
+  type: TIMED_PAYMENT,
+
 });
 
 export const initiateGetAccntDetails = () => {

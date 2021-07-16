@@ -106,21 +106,18 @@ class Report extends React.Component {
                         <table className="transactions">
                             <thead>
                                 <tr>
-                                    <th>Date</th>
+                                    <th>Transaction Date</th>
                                     <th>Deposits</th>
                                     <th>Withdrawals</th>
                                     <th>Balance</th>
-                                    <th>Contract Balance</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>{this.state.formatted_date}</td>
-                                    <td>{this.props.deposit_amount}</td>
+                                    <td>{this.deposit_amount}</td>
                                     <td>{this.props.withdraw_amount}</td>
                                     <td>{this.props.total_balance}</td>
-
-                                    <td>{this.props.contract_balance}</td>
                                 </tr>
                             </tbody>
                         </table>

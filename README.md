@@ -12,6 +12,11 @@ Recieve Money: The user will recieve their payout routinely, at the user's speci
 
 Specify Contract Specs: User will be able to specify the name of the contract, the payout frequency and amount of each payout.
 
+### Preview
+
+![1](./accrue2.jpg)
+![2](./accrue1.jpg)
+
 ### How to Run
 
 <ul>

@@ -23,9 +23,10 @@ class Summary extends React.Component {
     //payout_amt: '',
     //errorMsg: ''
     payout_freq: this.props.payout_freq,
+    payout_amt: this.props.payout_amt,
     startDate: new Date(),
     endDate: new Date(),
-    transactions: [],
+    transactions: this.props.transactions, //added 5.16
     formSubmitted: true,
     errorMsg: '',
   };
@@ -52,22 +53,29 @@ class Summary extends React.Component {
     
   }
 
-  componentDidUpdate(prevProps) {
-    if (!_.isEqual(prevProps.transactions, this.props.transactions)) {
-      this.setState({
-        transactions: this.props.transactions
-      });
-    }
-    if (!_.isEqual(prevProps.errors, this.props.errors)) {
-      this.setState({
-        errorMsg: this.props.errors
-      });
-    }
-  }
+  // componentDidUpdate(prevProps) {
+  //   if (!_.isEqual(prevProps.transactions, this.props.transactions)) {
+  //     this.setState({
+  //       transactions: this.props.transactions
+  //     });
+  //   }
+  //   if (!_.isEqual(prevProps.errors, this.props.errors)) {
+  //     this.setState({
+  //       errorMsg: this.props.errors
+  //     });
+  //   }
+  // }
 
   handleAutoPayment() {
-    const minutes = this.minutes;
-
+    const minutes = this.minutes; //this.minutes needs to be imported from countdown via state.
+    if (minutes === 0) {
+      this.setState({
+        time: this.secondsToTime(minutes),
+        minutes: this.payout_freq, //needs to be payout_freq not static #
+        total_balance: (this.total_balance + 60), //should be + {payout_amt}
+        contract_balance: (this.contract_balance - this.payout_amt)
+      })
+    }
 
   }
 
@@ -96,16 +104,11 @@ class Summary extends React.Component {
     const { account } = this.props;
     // const { transactions } = this.props;
     const { payout_freq } = this.props;
-    const {
-      startDate,
-      endDate,
-      transactions,
-      formSubmitted,
-      errorMsg
-    } = this.state;
+    const { transactions } = this.state;
+    const deposit_amount = transactions.deposit_amount;
     //const type = selectedType.charAt(0).toUpperCase() + selectedType.slice(1);
 
-    //current date
+    //current date declaration
     const timeElasped = Date.now();
     const today = new Date(timeElasped);
     const today2 = today.toDateString();
@@ -179,20 +182,20 @@ class Summary extends React.Component {
         </div>
 
         <hr />
-        <br></br>
+        {/* <br></br>
 
-        <div className="interest-rate">
-          <table>
-            <tbody>
-              <tr>
-                <th>Interest Rate:</th>
-              </tr>
-              <tr>
-                <td>5%</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        // <div className="interest-rate">
+        //   <table>
+        //     <tbody>
+        //       <tr>
+        //         <th>Interest Rate:</th>
+        //       </tr>
+        //       <tr>
+        //         <td>5%</td>
+        //       </tr>
+        //     </tbody>
+        //   </table>
+        // </div>
 
         <ul>
           {this.state.transactions.map((transaction) => (
@@ -220,7 +223,7 @@ class Summary extends React.Component {
 
         <br></br><br></br>
 
-        <div>
+        {/* <div>
           <body>
             <br />
             <table className="transactions">
@@ -245,7 +248,7 @@ class Summary extends React.Component {
               </tbody>
             </table>
           </body>
-        </div>
+        </div> */}
 
       </div>
     )
