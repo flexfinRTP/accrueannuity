@@ -49,7 +49,7 @@ const accountReducer = (state = {}, action) => {
       break;
     case RESET_ACCOUNT: //reset_account clears out state
       return {};
-    default: //default returns current state
+    default: //default returns previous state
       return state;
   }
 };
